@@ -4,17 +4,22 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 
 import models.Project;
+import play.Logger;
 import play.libs.ws.WSBodyReadables;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.concurrent.CompletionStage;
+import play.data.DynamicForm;
+import play.data.FormFactory;
+
+
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -76,15 +81,12 @@ public class HomeController extends Controller {
         });
     }
 
-
-    public Result freelancelot() {
-        return ok(views.html.freelancelot.render(search_list));
-    }
-
-    public Result captureSearchKeyword(String keyword) {
-        searcKey = keyword;
-        String result = "";
-        return ok(views.html.freelancelot.render(search_list));
+    @Inject FormFactory formFactory;
+    public Result captureSearchKeyword(Http.Request request) {
+        DynamicForm dynamicForm = formFactory.form().bindFromRequest(request);
+        searcKey = dynamicForm.get("search");
+        System.out.println(searcKey);
+        return redirect(routes.HomeController.index());
     }
 
 }

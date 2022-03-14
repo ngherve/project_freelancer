@@ -88,7 +88,7 @@
     <h1 style="margin-bottom: 10px;">Welcome to FreeLancelot</h1>
 
     <div style="margin:auto;">
-        <form method="get" action="freelancelot">
+        <form method="POST" action="@routes.HomeController.captureSearchKeyword()">
             <div class="containTag">
                 <div class="con2Tag">
                     <input type ="text" name = "search" style="height:25px; font-size:14pt;" placeholder="Enter search terms">
