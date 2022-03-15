@@ -19,6 +19,9 @@ public class Project {
     public String proj_type;
     public ArrayList<String> required_skills;
 
+    public Project(){
+
+    }
 
     public Project(String owner_id, long time_summited, String title, String proj_type, ArrayList<String> required_skills) {
         this.owner_id = owner_id;

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 
 import models.Project;
-import play.Logger;
+
 import play.libs.ws.WSBodyReadables;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
@@ -13,8 +13,7 @@ import play.mvc.Http;
 import play.mvc.Result;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.concurrent.CompletionStage;
 import play.data.DynamicForm;
 import play.data.FormFactory;
@@ -42,7 +41,8 @@ public class HomeController extends Controller {
         this.ws = ws;
     }
 
-    HashMap search_list = new HashMap<>();
+    LinkedHashMap  search_list = new LinkedHashMap <String, ArrayList<Project>>();
+    LinkedHashMap  temp = new LinkedHashMap <String, ArrayList<Project>>();
 
     //ArrayList<ArrayList<Project>> search_list = new ArrayList<>();
     public CompletionStage<Result> index() {
@@ -73,6 +73,15 @@ public class HomeController extends Controller {
 
                 if (searcKey != "") {
                     search_list.put(searcKey, list_proj);
+                    List<String> alKeys = new ArrayList<String>(search_list.keySet());
+                    Collections.reverse(alKeys);
+                    System.out.println(alKeys.toString());
+                    for(int i = 0; i>alKeys.size();i++){
+                        System.out.println(search_list.get(i) + "  i");
+                        //Map.Entry<String, ArrayList<Project>> entry = (Map.Entry<String, ArrayList<Project>>) temp.get(i);
+                        search_list.put(alKeys.get(i), search_list.get(alKeys.get(i)));
+                    }
+
                 }
 
 
@@ -87,6 +96,41 @@ public class HomeController extends Controller {
         searcKey = dynamicForm.get("search");
         System.out.println(searcKey);
         return redirect(routes.HomeController.index());
+    }
+
+
+    public CompletionStage<Result> skills(String theSkill) {
+        WSRequest request = ws.url("https://www.freelancer.com/api/projects/0.1/jobs/search");
+        request.addHeader("freelancer-oauth-v1", "D7qxDjJNB6KjDtEUcpOUrsfEGLFLPk");
+        String theSkillToFind = "\"" + theSkill+ "\"";
+        System.out.println(theSkillToFind);
+
+        request.addQueryParameter("job_names[]", theSkill);
+
+
+        return request.setMethod("GET").stream().thenApply(res -> {
+            if (res.getStatus() == 200) {
+                json = res.getBody(WSBodyReadables.instance.json());
+                //    JsonNode job = json.get("result").get(0);
+                JsonNode job = json.get("result").get(0);
+                String job_ID = job.get("id").asText();
+
+                System.out.println(job_ID);
+
+
+                System.out.println(job.toPrettyString());
+
+            }
+            return ok(views.html.skill.render(search_list));
+        });
+    }
+
+
+    public Result ownerIDSearch(String theOwner) {
+
+
+
+        return ok(views.html.owner.render(search_list));
     }
 
 }
