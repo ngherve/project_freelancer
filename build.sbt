@@ -10,3 +10,4 @@ scalaVersion := "2.13.8"
 libraryDependencies ++= Seq(guice, javaWs, ehcache,ws)
 
 libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.11"
+libraryDependencies += "org.mockito" % "mockito-core" % "2.10.0" % "test"
