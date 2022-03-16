@@ -21,12 +21,9 @@ public class HomeControllerTest extends WithApplication {
 
     @Test
     public void testIndex() {
-        Http.RequestBuilder request = new Http.RequestBuilder()
-                .method(GET)
-                .uri("/");
-
-        Result result = route(app, request);
+        Result result = new HomeController().index();
         assertEquals(OK, result.status());
+        assertEquals("text/html", result.contentType().get());
+        assertEquals("utf-8", result.charset().get());
     }
-
 }

@@ -1,101 +1,90 @@
-@(search_list : java.util.HashMap[String,java.util.ArrayList[Project]])
+@(search_list : java.util.List[Project])
 
 
 @main("FreeLancelot") {
 
     <style>
-            body{
+            body {
                 padding: 5%;
                 padding-top: 20px;
             }
-            h1 {text-align: center;}
-            h1 p{
+
+            h1 {
+                text-align: center;
+            }
+
+            h1 p {
                 display: inline-block;
             }
 
 
-            .displayBox{
+            .displayBox {
 
                 margin-top: 30px;
 
             }
-            .boldFont1{
+
+            .boldFont1 {
                 font-size: 25px;
                 font-weight: 500;
             }
-            .boldFont2{
+
+            .boldFont2 {
                 font-size: 20px;
             }
-            .boldFont3{
+
+            .boldFont3 {
                 font-size: 20px;
-                font-weight:300;
+                font-weight: 300;
             }
-            .proTitle span{
+
+            .proTitle span {
                 display: inline;
             }
-            .proTitle p{
+
+            .proTitle p {
                 display: inline;
 
             }
-            .proList{
+
+            .proList {
                 padding-left: 20px;
 
 
             }
-            .proList li{
+
+            .proList li {
                 padding-bottom: 5px;
             }
 
-            .proList li p{
+            .proList li p {
                 display: inline;
             }
-            .space{
+
+            .space {
                 padding-right: 15px;
             }
 
     </style>
 
+    <!-- TODO: Make it dynamic -->
+    <h1 style="margin-bottom: 10px;">The Skill : <p>PHP</p></h1>
 
-    <h1 style="margin-bottom: 10px;">The Skilll : <p>PHP</p></h1>
-
-
-
-    </div>
-    @if(search_list.size()!=0) {
-        @for((key,project) <- search_list) {
-
-            <div class="displayBox">
-                <div class="proTitle">
-                    <span class="boldFont1">
-                    Search terms: <p>@key</p> :
-                </span>
-                    <span class="boldFont2">
-                    Flesh Reading Ease Index <p>##</p> FKGL <p>#.#</p>
-                </span>
-                    <span style="padding-left: 10px">
-                        <a href="" target="_blank">Global Stats</a>
-                    </span>
-                </div>
-
-
-                <ol class="proList boldFont3">
-                @for(temp <- project) {
-                    <li class="pros">
-                        <a href="ownerIDSearch?theOwner=@temp.owner_id" target="_blank">@temp.owner_id</a>
-                        <p>@temp.date</p>, <a href="" target="_blank"><p>@temp.title</p></a>
-                        , type: <p>@temp.proj_type</p>, skills:
-                        @for(skill <- temp.required_skills){
-                            <a href="theSkillSearch?theSkill=@skill" target="_blank" class="space"><p>@skill</p></a>
-                        }
-                        <a href="" target="_blank" class="space"><p>Stats</p></a>
-                        <a href="" target="_blank" class="space"><p>Readability</p></a>
-                    </li>
+    @if(search_list.size() != 0) {
+        <ol class="proList boldFont3">
+        @for(temp <- search_list) {
+            <li class="pros">
+                <a href="@routes.HomeController.ownerIDSearch(temp.ownerId)" target="_blank">@temp.ownerId</a>
+                <p>@temp.date</p>, <a href="" target="_blank"><p>@temp.title</p></a>
+                , type: <p>@temp.`type`</p>, skills:
+                @for(skill <- temp.jobs) {
+                    <a href="@routes.HomeController.skills(skill.id)" target="_blank" class="space"><p>@skill.name</p></a>
                 }
-                </ol>
-
-            </div>
+                <a href="" target="_blank" class="space"><p>Stats</p></a>
+                <a href="" target="_blank" class="space"><p>Readability</p></a>
+            </li>
         }
-
+        </ol>
     }
 
 }

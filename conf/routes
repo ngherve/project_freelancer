@@ -8,8 +8,8 @@ GET    /freelancelot               controllers.HomeController.index()
 + nocsrf
 POST   /freelancelot               controllers.HomeController.captureSearchKeyword(request : Request)
 POST   /                           controllers.HomeController.captureSearchKeyword(request : Request)
-GET     /theSkillSearch             controllers.HomeController.skills(theSkill)
-GET     /ownerIDSearch              controllers.HomeController.ownerIDSearch(theOwner)
+GET     /skills/:skillId           controllers.HomeController.skills(skillId: String)
+GET     /ownerIDSearch/:ownerId             controllers.HomeController.ownerIDSearch(ownerId: String)
 
 
 # Map static resources from the /public folder to the /assets URL path

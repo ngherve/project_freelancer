@@ -1,4 +1,4 @@
-@(search_list : java.util.LinkedHashMap[String,java.util.ArrayList[Project]])
+@(search_list : java.util.LinkedHashMap[String,java.util.List[Project]])
 
 
 @main("FreeLancelot") {
@@ -119,11 +119,11 @@
                     <ol class="proList boldFont3">
                     @for(temp <- project) {
                         <li class="pros">
-                            <a href="ownerIDSearch?theOwner=@temp.owner_id" target="_blank">@temp.owner_id</a>
+                            <a href="@routes.HomeController.ownerIDSearch(temp.ownerId)" target="_blank">@temp.ownerId</a>
                             <p>@temp.date</p>, <a href="" target="_blank"><p>@temp.title</p></a>
-                            , type: <p>@temp.proj_type</p>, skills:
-                            @for(skill <- temp.required_skills) {
-                                <a href="theSkillSearch?theSkill=@skill" target="_blank" class="space"><p>@skill</p></a>
+                            , type: <p>@temp.`type`</p>, skills:
+                            @for(skill <- temp.jobs) {
+                                <a href="@routes.HomeController.skills(skill.id)" target="_blank" class="space"><p>@skill.name.toString</p></a>
                             }
                             <a href="" target="_blank" class="space"><p>Stats</p></a>
                             <a href="" target="_blank" class="space"><p>Readability</p></a>

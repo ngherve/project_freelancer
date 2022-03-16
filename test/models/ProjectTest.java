@@ -15,29 +15,29 @@ public class ProjectTest {
     @Test
     public void getOwner_id() {
         Project proj = new Project();
-        proj.setOwner_id("100");
-        assertEquals("100",proj.getOwner_id());
+        proj.setOwnerId("100");
+        assertEquals("100",proj.getOwnerId());
     }
 
     @Test
     public void setOwner_id() {
         Project proj = new Project();
-        proj.setOwner_id("100");
-        assertEquals("100",proj.getOwner_id());
+        proj.setOwnerId("100");
+        assertEquals("100",proj.getOwnerId());
     }
 
     @Test
     public void getTime_summited() {
         Project proj = new Project();
-        proj.setTime_summited(100000);
-        assertEquals(100000,proj.getTime_summited());
+        proj.setTimeSubmitted(100000);
+        assertEquals(100000,proj.getTimeSubmitted());
     }
 
     @Test
     public void setTime_summited() {
         Project proj = new Project();
-        proj.setTime_summited(100000);
-        assertEquals(100000,proj.getTime_summited());
+        proj.setTimeSubmitted(100000);
+        assertEquals(100000,proj.getTimeSubmitted());
     }
 
     @Test
@@ -60,8 +60,8 @@ public class ProjectTest {
         ArrayList<String> skills = new ArrayList<>();
         skills.add("java");
         skills.add("PHP");
-        proj.setRequired_skills(skills);
-        assertEquals(Arrays.asList("java", "PHP"),proj.getRequired_skills());
+        proj.setJobs(skills);
+        assertEquals(Arrays.asList("java", "PHP"),proj.getJobs());
     }
 
     @Test
@@ -70,8 +70,8 @@ public class ProjectTest {
         ArrayList<String> skills = new ArrayList<>();
         skills.add("java");
         skills.add("PHP");
-        proj.setRequired_skills(skills);
-        assertEquals(Arrays.asList("java", "PHP"),proj.getRequired_skills());
+        proj.setJobs(skills);
+        assertEquals(Arrays.asList("java", "PHP"),proj.getJobs());
     }
 
     @Test
@@ -80,7 +80,7 @@ public class ProjectTest {
         skills.add("java");
         skills.add("PHP");
         Project proj = new Project("123",123456,"title","type",skills);
-        Date date = new Date(proj.getTime_summited() * 1000);
+        Date date = new Date(proj.getTimeSubmitted() * 1000);
         DateFormat formatter = new SimpleDateFormat("MMM dd yyyy");
         String temp = formatter.format(date);
         assertEquals("123 " + temp + ", title, type: type, skills: [java, PHP]",proj.toString());
