@@ -29,9 +29,6 @@ public class FreelancerApiService implements IApiService {
             request.addQueryParameter(query.key, query.value);
         }
 
-
-
-
         return request.setMethod("GET").stream().thenApply(res -> {
             ArrayList<Project> projects = new ArrayList<>();
 

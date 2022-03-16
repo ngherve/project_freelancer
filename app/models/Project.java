@@ -22,7 +22,7 @@ public class Project {
     public String projectType;
     public ArrayList<Job> jobs;
 
-    public Project(){
+    public Project() {
 
     }
 
@@ -40,6 +40,7 @@ public class Project {
     }
 
     public String getProjId(){return this.projId;}
+    
     public void setProjId(String projId){this.projId = projId;}
 
     public String getOwnerId() {
@@ -83,6 +84,7 @@ public class Project {
     }
 
     public static Project fromJson(JsonNode json) {
+        
         var projId = json.get("id").asText();
         var ownerId = json.get("owner_id").asText();
         var timeSubmitted = json.get("time_submitted").asLong();
@@ -96,6 +98,7 @@ public class Project {
             var jobName = job.get("name").asText();
             skills.add(new Job(jobId, jobName));
         }
-        ;return new Project(projId,ownerId, timeSubmitted, title, type, skills);
+
+        return new Project(projId,ownerId, timeSubmitted, title, type, skills);
     }
 }

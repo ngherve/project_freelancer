@@ -77,6 +77,19 @@ public class HomeController extends Controller {
         return reverseMap;
     }
 
+    public static <T,Q> LinkedHashMap<T,Q> reverseMap(LinkedHashMap<T,Q> toReverse){
+        LinkedHashMap<T,Q> reverseMap = new LinkedHashMap<>();
+        List<T> reverseOrderKeys = new ArrayList<>(toReverse.keySet());
+        Collections.reverse(reverseOrderKeys);
+        reverseOrderKeys.forEach((key) -> reverseMap.put(key, toReverse.get(key)));
+        return reverseMap;
+    }
+
+
+    public CompletionStage<Result> skills(String skillId) {
+        List<Query> queries = new ArrayList<>();
+        queries.add(new Query("job_details", "true"));
+        queries.add(new Query("jobs[]", skillId));
 
     public CompletionStage<Result> skills(String skillId) {
         List<Query> queries = new ArrayList<>();
