@@ -1,0 +1,86 @@
+@(projects : java.util.List[Project])(content: Html)
+
+
+@main("FreeLancelot") {
+    <style>
+            body {
+                padding: 5%;
+                padding-top: 20px;
+            }
+
+            h1 {
+                text-align: center;
+            }
+
+            h1 p {
+                display: inline-block;
+            }
+
+
+            .displayBox {
+
+                margin-top: 30px;
+
+            }
+
+            .boldFont1 {
+                font-size: 25px;
+                font-weight: 500;
+            }
+
+            .boldFont2 {
+                font-size: 20px;
+            }
+
+            .boldFont3 {
+                font-size: 20px;
+                font-weight: 300;
+            }
+
+            .proTitle span {
+                display: inline;
+            }
+
+            .proTitle p {
+                display: inline;
+
+            }
+
+            .proList {
+                padding-left: 20px;
+
+
+            }
+
+            .proList li {
+                padding-bottom: 5px;
+            }
+
+            .proList li p {
+                display: inline;
+            }
+
+            .space {
+                padding-right: 15px;
+            }
+
+    </style>
+
+    @if(projects.size() != 0) {
+        <ol class="proList boldFont3">
+        @for(temp <- projects) {
+            <li class="pros">
+                <a href="routes.HomeController.ownerIDSearch(@temp.ownerId)" target="_blank">@temp.ownerId</a>
+                <p>@temp.date</p>, <a href="" target="_blank"><p>@temp.title</p></a>
+                , type: <p>@temp.projectType</p>, skills:
+                @for(skill <- temp.jobs) {
+                    <a href="@routes.HomeController.skills(skill.id)" target="_blank" class="space"><p>@skill.name.toString</p></a>
+                }
+                <a href="" target="_blank" class="space"><p>Stats</p></a>
+                <a href="" target="_blank" class="space"><p>Readability</p></a>
+            </li>
+        }
+        </ol>
+    }
+
+}

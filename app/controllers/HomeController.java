@@ -3,18 +3,24 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 
 
+import models.Job;
 import models.Project;
+
+import models.Query;
 import play.libs.ws.WSBodyReadables;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 import java.util.concurrent.CompletionStage;
+import play.data.DynamicForm;
+import play.data.FormFactory;
+import services.IApiService;
+
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -22,8 +28,9 @@ import java.util.concurrent.CompletionStage;
  */
 public class HomeController extends Controller {
     private JsonNode json;
+    private final IApiService service;
     private final WSClient ws;
-    String searcKey = "";
+    String searchKey = "";
 
     /**
      * An action that renders an HTML page with a welcome message.
@@ -33,58 +40,62 @@ public class HomeController extends Controller {
      */
 
     @Inject
-    public HomeController(WSClient ws) {
+    public HomeController(IApiService service, WSClient ws) {
+        this.service = service;
         this.ws = ws;
     }
 
-    HashMap search_list = new HashMap<>();
+    LinkedHashMap<String, List<Project>> search_list = new LinkedHashMap<>();
 
-    //ArrayList<ArrayList<Project>> search_list = new ArrayList<>();
     public CompletionStage<Result> index() {
+        List<Query> queries = new ArrayList<>();
+        queries.add(new Query("query", "\""+searchKey+"\""));
+        queries.add(new Query("job_details", "true"));
+        queries.add(new Query("limit", "10"));
 
-        WSRequest request = ws.url("https://www.freelancer.com/api/projects/0.1/projects/active");
-        request.addHeader("freelancer-oauth-v1", "D7qxDjJNB6KjDtEUcpOUrsfEGLFLPk");
-        String search_key = "\"" + searcKey + "\"";
-        System.out.println(search_key);
+       return this.service.getProjects(queries, "/active").thenApply(projects -> {
+           if (!searchKey.isEmpty()) {
+               search_list.put(searchKey, projects);
+           }
 
-        request.addQueryParameter("query", search_key);
-        request.addQueryParameter("job_details", "true");
-        request.addQueryParameter("limit", "10");
+           return ok(views.html.freelancelot.render(reverseMap(search_list)));
+       });
+    }
 
+    @Inject FormFactory formFactory;
+    public Result captureSearchKeyword(Http.Request request) {
+        DynamicForm dynamicForm = formFactory.form().bindFromRequest(request);
+        searchKey = dynamicForm.get("search");
+        return redirect(routes.HomeController.index());
+    }
 
-        return request.setMethod("GET").stream().thenApply(res -> {
-            if (res.getStatus() == 200) {
-                json = res.getBody(WSBodyReadables.instance.json());
-                JsonNode projects = json.get("result").get("projects");
-                ArrayList<Project> list_proj = new ArrayList<>();
-                for (var proj : projects) {
-                    ArrayList<String> skills = new ArrayList<>();
-                    JsonNode jobs = proj.get("jobs");
-                    for (int i = 0; i < jobs.size(); i++) {
-                        skills.add(jobs.get(i).get("name").asText());
-                    }
-                    list_proj.add(new Project(proj.get("owner_id").asText(), proj.get("time_submitted").asLong(), proj.get("title").asText(), proj.get("type").asText(), skills));
-                }
-
-                if (searcKey != "") {
-                    search_list.put(searcKey, list_proj);
-                }
-
-
-            }
-            return ok(views.html.freelancelot.render(search_list));
-        });
+    public static <T,Q> LinkedHashMap<T,Q> reverseMap(LinkedHashMap<T,Q> toReverse){
+        LinkedHashMap<T,Q> reverseMap = new LinkedHashMap<>();
+        List<T> reverseOrderKeys = new ArrayList<>(toReverse.keySet());
+        Collections.reverse(reverseOrderKeys);
+        reverseOrderKeys.forEach((key) -> reverseMap.put(key, toReverse.get(key)));
+        return reverseMap;
     }
 
 
-    public Result freelancelot() {
-        return ok(views.html.freelancelot.render(search_list));
+    public CompletionStage<Result> skills(String skillId) {
+        List<Query> queries = new ArrayList<>();
+        queries.add(new Query("job_details", "true"));
+        queries.add(new Query("jobs[]", skillId));
+        queries.add(new Query("limit", "10"));
+
+        return this.service.getProjects(queries, "/active").thenApply(projects -> ok(views.html.skill.render(projects)));
     }
 
-    public Result captureSearchKeyword(String keyword) {
-        searcKey = keyword;
-        String result = "";
-        return ok(views.html.freelancelot.render(search_list));
+
+    public CompletionStage<Result> ownerIDSearch(String ownerId) {
+        List<Query> queries = new ArrayList<>();
+        queries.add(new Query("owners[]", ownerId));
+        queries.add(new Query("job_details", "true"));
+        queries.add(new Query("user_details", "true"));
+        queries.add(new Query("limit", "10"));
+
+        return this.service.getProjects(queries, "").thenApply(projects -> ok(views.html.owner.render(projects)));
     }
 
 }
