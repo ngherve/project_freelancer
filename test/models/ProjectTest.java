@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
+// This is the test for Project
 public class ProjectTest {
     private ArrayList<Job> skills = new ArrayList<Job>(Arrays.asList(new Job("1","java")));
     private Project proj= new Project("123",123456,"title","type",skills);
