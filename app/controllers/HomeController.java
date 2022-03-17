@@ -86,7 +86,7 @@ public class HomeController extends Controller {
             var user = ownerResult.getUsers().get(ownerId);
             var projects = ownerResult.getProjects();
 
-            return ok(views.html.owner.render(projects, user));
+            return ok(views.html.owner.render(projects));
         });
     }
     public CompletionStage<Result> getGlobalStat() {
