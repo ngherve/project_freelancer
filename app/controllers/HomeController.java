@@ -1,12 +1,9 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
-
 import models.Project;
 
 import models.Query;
-import play.libs.ws.WSClient;
+import models.SearchQueryStats;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -18,16 +15,15 @@ import play.data.DynamicForm;
 import play.data.FormFactory;
 import services.IApiService;
 
-
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
  */
 public class HomeController extends Controller {
-    private JsonNode json;
+
     private final IApiService service;
-    private final WSClient ws;
-    String searchKey = "";
+
+    public String searchKey = "";
 
     /**
      * An action that renders an HTML page with a welcome message.
@@ -35,26 +31,23 @@ public class HomeController extends Controller {
      * this method will be called when the application receives a
      * <code>GET</code> request with a path of <code>/</code>.
      */
-
-    @Inject
-    public HomeController(IApiService service, WSClient ws) {
-        this.service = service;
-        this.ws = ws;
-    }
-
     LinkedHashMap<String, List<Project>> search_list = new LinkedHashMap<>();
+    @Inject
+    public HomeController(IApiService service) {
+        this.service = service;
+    }
 
     public CompletionStage<Result> index() {
         List<Query> queries = new ArrayList<>();
         queries.add(new Query("query", "\""+searchKey+"\""));
         queries.add(new Query("job_details", "true"));
+        queries.add(new Query("full_description", "true"));
         queries.add(new Query("limit", "10"));
 
-       return this.service.getProjects(queries, "/active").thenApply(projects -> {
+       return service.getProjects(queries, "/active").thenApply(projects -> {
            if (!searchKey.isEmpty()) {
                search_list.put(searchKey, projects);
            }
-
            return ok(views.html.freelancelot.render(reverseMap(search_list)));
        });
     }
@@ -76,28 +69,65 @@ public class HomeController extends Controller {
         return reverseMap;
     }
 
-
-
-
     public CompletionStage<Result> skills(String skillId) {
         List<Query> queries = new ArrayList<>();
         queries.add(new Query("job_details", "true"));
         queries.add(new Query("jobs[]", skillId));
+        queries.add(new Query("full_description", "true"));
         queries.add(new Query("limit", "10"));
 
-        return this.service.getProjects(queries, "/active").thenApply(projects -> ok(views.html.skill.render(projects)));
+        return service.getProjects(queries, "/active").thenApply(projects -> ok(views.html.skill.render(skillId,projects)));
     }
 
 
     public CompletionStage<Result> ownerIDSearch(String ownerId) {
-        List<Query> queries = new ArrayList<>();
-        queries.add(new Query("owners[]", ownerId));
-        queries.add(new Query("job_details", "true"));
-        queries.add(new Query("user_details", "true"));
-        queries.add(new Query("limit", "10"));
+        return service.getOwnerResult(ownerId).thenApply(ownerResult -> {
 
-        return this.service.getProjects(queries, "").thenApply(projects -> ok(views.html.owner.render(projects)));
+            var user = ownerResult.getUsers().get(ownerId);
+            var projects = ownerResult.getProjects();
+
+            return ok(views.html.owner.render(projects, user));
+        });
+    }
+    public CompletionStage<Result> getGlobalStat() {
+
+        List<Query> queries = new ArrayList<>();
+        queries.add(new Query("query", searchKey));
+        queries.add(new Query("limit", "250"));
+        queries.add(new Query("job_details", "true"));
+        queries.add(new Query("full_description", "true"));
+        LinkedHashMap<String, List<Project>> projList = new LinkedHashMap<>();
+
+        return service.getProjects(queries, "/active").thenApply(projects -> {
+            String stats = "";
+
+            System.out.println("here");
+            projList.put(searchKey, projects);
+            SearchQueryStats queryStat = new SearchQueryStats(searchKey, projList);
+
+            stats = SearchQueryStats.combineOutput(queryStat.computeWordLevelStat());
+
+            return ok(views.html.globalstats.render(stats));
+        });
     }
 
+    public CompletionStage<Result> getProjectIDStat(String projId) {
+        List<Query> queries = new ArrayList<>();
+
+        // queries.add(new Query("query", searchKey));
+        queries.add(new Query("full_description", "true"));
+        queries.add(new Query("job_details", "true"));
+
+        return service.getIDProjects(queries, "/"+projId).thenApply(
+                project ->  {
+                    try {
+                        var out = SearchQueryStats.combineOutput(SearchQueryStats.computeWordLevelStatByProject(project.description));
+                        return ok(views.html.projectIDStat.render(out));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return badRequest();
+                    }
+                });
+    }
 }
 

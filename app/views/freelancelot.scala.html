@@ -111,11 +111,9 @@
                     Flesh Reading Ease Index <p>##</p> FKGL <p>#.#</p>
                 </span>
                         <span style="padding-left: 10px">
-                            <a href="" target="_blank">Global Stats</a>
+                            <a href="@routes.HomeController.getGlobalStat()" target="_blank">Global Stats</a>
                         </span>
                     </div>
-
-
                     <ol class="proList boldFont3">
                     @for(temp <- project) {
                         <li class="pros">
@@ -123,9 +121,9 @@
                             <p>@temp.date</p>, <a href="" target="_blank"><p>@temp.title</p></a>
                             , type: <p>@temp.projectType</p>, skills:
                             @for(skill <- temp.jobs) {
-                                <a href="@routes.HomeController.skills(skill.id)" target="_blank" class="space"><p>@skill.name.toString</p></a>
+                                <a href="@routes.HomeController.skills(skill.id)" target="_blank" class="space"><p>@skill.name</p></a>
                             }
-                            <a href="" target="_blank" class="space"><p>Stats</p></a>
+                            <a href="@routes.HomeController.getProjectIDStat(temp.projId)" target="_blank" class="space"><p>Stats</p></a>
                             <a href="" target="_blank" class="space"><p>Readability</p></a>
                         </li>
                     }

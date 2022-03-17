@@ -11,11 +11,20 @@ import static org.junit.Assert.assertEquals;
 // This is the test for Project
 public class ProjectTest {
     private final ArrayList<Job> skills = new ArrayList<Job>(Arrays.asList(new Job("1", "java")));
-    private final Project proj = new Project("1", "123", 123456, "title", "type", skills);
-
+    private final Project proj = new Project("1", "123", 123456, "title", "type","description", skills);
 
     @Test
-    public void testGetOwnerId() {
+    public void testGetProjId() {
+        assertEquals("1", proj.getProjId());
+    }
+
+    @Test
+    public void setProj_id() {
+        proj.setProjId("1");
+        assertEquals("1", proj.getProjId());
+    }
+    @Test
+    public void getOwnerId() {
         assertEquals("123", proj.getOwnerId());
     }
 
@@ -63,6 +72,6 @@ public class ProjectTest {
      */
     @Test
     public void ToString() {
-
+        assertEquals("123 "+proj.date+", title, type: type, skills: java ",proj.toString());
     }
 }

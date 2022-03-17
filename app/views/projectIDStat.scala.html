@@ -1,5 +1,4 @@
-@(projects : java.util.List[Project], user: User)
-
+@(description : String)
 
 @main("FreeLancelot") {
 
@@ -39,31 +38,22 @@
             .proList li{
                 padding-bottom: 5px;
             }
+
             .proList li p{
                 display: inline;
             }
             .space{
                 padding-right: 15px;
             }
-
     </style>
 
+    <h1 style="margin-bottom: 10px;"> Project Description : <p></p></h1>
 
-    <h1 style="margin-bottom: 10px;">The owner_ID : <p>@projects.get(0).getOwnerId</p></h1>
-    @if(projects.size() != 0) {
-        <ol class="proList boldFont3">
-        @for(temp <- projects) {
-            <li class="pros">
-                <a href="@routes.HomeController.ownerIDSearch(temp.ownerId)" target="_blank">@temp.ownerId</a>
-                <p>@temp.date</p>, <a href="" target="_blank"><p>@temp.title</p></a>
-                , type: <p>@temp.projectType</p>, skills:
-                @for(skill <- temp.jobs) {
-                    <a href="@routes.HomeController.skills(skill.id)" target="_blank" class="space"><p>@skill.name</p></a>
-                }
+    <ol class="proList boldFont3">
 
-            </li>
-        }
-        </ol>
-    }
-
+        <li class="pros">
+            <a href="" target="_blank"></a>
+            <p>@Html.apply(description)</p>
+        </li>
+    </ol>
 }

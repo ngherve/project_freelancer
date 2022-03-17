@@ -2,9 +2,11 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class Project {
     @JsonProperty("owner_id")
     public String ownerId;
 
-    @JsonProperty("time_submitted")
+    @JsonProperty("submitdate")
     public long timeSubmitted;
 
     public String date;
@@ -33,20 +35,22 @@ public class Project {
 
     public List<Job> jobs;
 
-    public Project() {
-    }
+    @JsonProperty("description")
+    public String description;
 
-    public Project(String projId, String ownerId, long timeSubmitted, String title, String projectType, List<Job> jobs) {
+    public Project() {}
+
+    public Project(String projId, String ownerId, long timeSubmitted, String title, String projectType,String description, List<Job> jobs) {
         this.projId = projId;
         this.ownerId = ownerId;
         this.timeSubmitted = timeSubmitted;
         this.title = title;
         this.projectType = projectType;
         this.jobs = jobs;
+        this.description = description;
         Date date = new Date(this.timeSubmitted * 1000);
         DateFormat formatter = new SimpleDateFormat("MMM dd yyyy");
         this.date = formatter.format(date);
-
     }
 
     public String getProjId() {
@@ -71,6 +75,9 @@ public class Project {
 
     public void setTimeSubmitted(long timeSubmitted) {
         this.timeSubmitted = timeSubmitted;
+        Date date = new Date(this.timeSubmitted * 1000);
+        DateFormat formatter = new SimpleDateFormat("MMM dd yyyy");
+        this.date = formatter.format(date);
     }
 
     public String getTitle() {
@@ -87,6 +94,13 @@ public class Project {
 
     public void setJobs(List<Job> jobs) {
         this.jobs = jobs;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String toString() {
