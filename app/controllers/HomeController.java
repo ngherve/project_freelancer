@@ -55,8 +55,6 @@ public class HomeController extends Controller {
 
         return this.service.getProjects(queries, "/active").thenApply(projects -> {
             String stats = "";
-
-            System.out.println("here");
             projList.put(searchKey, projects);
             SearchQueryStats queryStat = new SearchQueryStats(searchKey, projList);
 
