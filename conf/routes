@@ -10,6 +10,8 @@ POST   /freelancelot               controllers.HomeController.captureSearchKeywo
 POST   /                           controllers.HomeController.captureSearchKeyword(request : Request)
 GET     /skills/:skillId           controllers.HomeController.skills(skillId: String)
 GET     /ownerIDSearch/:ownerId             controllers.HomeController.ownerIDSearch(ownerId: String)
+GET     /GlobalStats               controllers.HomeController.getGlobalStat()
+GET     /projectIDStats/:projId            controllers.HomeController.getProjectIDStat(projId: String)
 
 
 # Map static resources from the /public folder to the /assets URL path

@@ -1,8 +1,6 @@
 package services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Project;
 import models.Query;
 import play.libs.ws.WSBodyReadables;
@@ -26,7 +24,6 @@ public class FreelancerApiService implements IApiService {
     @Override
     public CompletionStage<List<Project>> getProjects(List<Query> queries, String page) {
         WSRequest request = ws.url(baseURL + page);
-        ObjectMapper objectMapper = new ObjectMapper();
 
         for (var query: queries) {
             request.addQueryParameter(query.key, query.value);
@@ -39,16 +36,28 @@ public class FreelancerApiService implements IApiService {
                 JsonNode jsonProjects = res.getBody(WSBodyReadables.instance.json()).get("result").get("projects");
 
                 for (var json : jsonProjects) {
-                    try {
-                        var project = objectMapper.treeToValue(json, Project.class);
-                        projects.add(project);
-                    } catch (JsonProcessingException e) {
-                        e.printStackTrace();
-                    }
+                    projects.add(Project.fromJson(json));
                 }
             }
 
             return projects;
+        });
+    }
+
+    @Override
+    public CompletionStage<Project> getIDProjects(List<Query> queries, String page) {
+        WSRequest request = ws.url(baseURL + page);
+
+        for (var query: queries) {
+            request.addQueryParameter(query.key, query.value);
+        }
+        return request.setMethod("GET").stream().thenApply(res -> {
+
+            if (res.getStatus() == 200) {
+                JsonNode jsonProjects = res.getBody(WSBodyReadables.instance.json()).get("result");
+                return Project.fromJson(jsonProjects);
+            }
+            return null;
         });
     }
 }
