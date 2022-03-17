@@ -39,7 +39,7 @@ public class HomeController extends Controller {
 
     public CompletionStage<Result> index() {
         List<Query> queries = new ArrayList<>();
-        queries.add(new Query("query", "\""+searchKey+"\""));
+        queries.add(new Query("query", searchKey));
         queries.add(new Query("job_details", "true"));
         queries.add(new Query("full_description", "true"));
         queries.add(new Query("limit", "10"));
@@ -53,13 +53,13 @@ public class HomeController extends Controller {
     }
 
     @Inject FormFactory formFactory;
-    public Result captureSearchKeyword(Http.Request request) {
+    public CompletionStage<Result> captureSearchKeyword(Http.Request request) {
         DynamicForm dynamicForm = formFactory.form().bindFromRequest(request);
         searchKey = dynamicForm.get("search");
-        return redirect(routes.HomeController.index());
+        List<Query> queries = new ArrayList<>();
+        queries.add(new Query("limit", "10"));
+        return this.service.getProjects(queries, "/active").thenApply(projects ->  redirect(routes.HomeController.index()));
     }
-
-
 
     public static <T,Q> LinkedHashMap<T,Q> reverseMap(LinkedHashMap<T,Q> toReverse){
         LinkedHashMap<T,Q> reverseMap = new LinkedHashMap<>();
@@ -130,4 +130,3 @@ public class HomeController extends Controller {
                 });
     }
 }
-
