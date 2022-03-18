@@ -29,6 +29,7 @@ public class FreelancerApiService implements IApiService {
     @Override
     public CompletionStage<List<Project>> getProjects(List<Query> queries, String page) {
         WSRequest request = ws.url(baseURL + page);
+        ObjectMapper objectMapper = new ObjectMapper();
 
         for (var query: queries) {
             request.addQueryParameter(query.key, query.value);
@@ -39,9 +40,12 @@ public class FreelancerApiService implements IApiService {
 
             if (res.getStatus() == 200) {
                 JsonNode jsonProjects = res.getBody(WSBodyReadables.instance.json()).get("result").get("projects");
-
-                for (var json : jsonProjects) {
-                    projects.add(Project.fromJson(json));
+                try {
+                    for (var json : jsonProjects) {
+                        projects.add(objectMapper.treeToValue(json, Project.class));
+                    }
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
                 }
             }
 

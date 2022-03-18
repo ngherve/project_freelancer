@@ -111,7 +111,7 @@ public class Project {
         }
         return (this.ownerId + " " + date + ", " + this.title + ", type: " + this.projectType + ", skills: " + skills);
     }
-
+/*
     public static Project fromJson(JsonNode json) {
         var projectId = json.get("id").asText();
         var ownerId = json.get("owner_id").asText();
@@ -128,5 +128,5 @@ public class Project {
             skills.add(new Job(jobId, jobName));
         }
         return new Project(projectId,ownerId, timeSubmitted, title, projType, description, skills);
-    }
+    }*/
 }
