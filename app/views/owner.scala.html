@@ -1,4 +1,4 @@
-@(projects : java.util.List[Project])
+@(projects : java.util.List[Project], user : User)
 
 
 @main("FreeLancelot") {
@@ -50,6 +50,14 @@
 
 
     <h1 style="margin-bottom: 10px;">The owner_ID : <p>@projects.get(0).getOwnerId</p></h1>
+    <ol class="boldFont3">
+
+        <li class="">
+            <a href="" target="_blank"></a>
+             <p>@Html.apply(user.toString)</p>
+        </li>
+    </ol>
+
     @if(projects.size() != 0) {
         <ol class="proList boldFont3">
         @for(temp <- projects) {
