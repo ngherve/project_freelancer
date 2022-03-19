@@ -26,18 +26,26 @@ public class SearchQueryStatsTest {
 
     @Test
     public void combineStrings() {
-        //assertEquals("",searchQS.combineStrings());
+        projectMap.put("name", projects);
+        assertEquals("descriptions"+ "\n",searchQS.combineStrings());
+
     }
 
     @Test
     public void computeWordLevelStat() {
-
-       // assertEquals(projectMap,searchQS.computeWordLevelStat());
+        projectMap.put("name", projects);
+        Map<String, Long> wordFreq = new LinkedHashMap<>();
+        wordFreq.put("descriptions", Long.parseLong("1"));
+        assertEquals(wordFreq,searchQS.computeWordLevelStat());
     }
 
     @Test
     public void computeWordLevelStatByProject() {
-        //assertEquals("",searchQS.computeWordLevelStatByProject(""));
+        projectMap.put("name", projects);
+        Map<String, Long> wordFreq = new LinkedHashMap<>();
+        wordFreq.put("", Long.parseLong("1"));
+        assertEquals(wordFreq,searchQS.computeWordLevelStatByProject(""));
+
     }
 
     @Test
