@@ -46,6 +46,10 @@
                 padding-right: 15px;
             }
 
+        ul li{
+            list-style: none;
+        }
+
     </style>
 
 
@@ -68,6 +72,8 @@
                 @for(skill <- temp.jobs) {
                     <a href="@routes.HomeController.skills(skill.id)" target="_blank" class="space"><p>@skill.name</p></a>
                 }
+                <a href="@routes.HomeController.getProjectIDStat(temp.projId)" target="_blank" class="space"><p>Stats</p></a>
+                <a href="" target="_blank" class="space"><p>Readability</p></a>
 
             </li>
         }

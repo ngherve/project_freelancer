@@ -1,7 +1,6 @@
 package models;
 
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -12,16 +11,16 @@ import static org.junit.Assert.assertNotNull;
 
 // This is the test for Project
 public class ProjectTest {
-
-    ArrayList<Job> skills = new ArrayList<Job>(Arrays.asList(new Job("1", "java")));
-    Project proj = new Project("1", "123", 123456, "title", "type","description", skills);
+    private final ArrayList<Job> skills = new ArrayList<Job>(Arrays.asList(new Job("1", "java")));
+    private final Project proj = new Project("1", "123", 123456, "title", "type","description", skills);
 
     @Test
-    public void Project(){
-        assertNotNull(new Project());
+    public void Job(){
+        assertNotNull(new ProjectTest());
     }
+
     @Test
-    public void getProjId() {
+    public void testGetProjId() {
         assertEquals("1", proj.getProjId());
     }
 
@@ -62,6 +61,12 @@ public class ProjectTest {
         proj.setTitle("title");
         assertEquals("title", proj.getTitle());
     }
+
+    @Test
+    public void getJobs() {
+        assertEquals(skills, proj.getJobs());
+    }
+
     @Test
     public void getDescription() {
         assertEquals("description", proj.getDescription());
@@ -74,16 +79,15 @@ public class ProjectTest {
     }
 
     @Test
-    public void getJobs() {
-        assertEquals(skills, proj.getJobs());
-    }
-
-    @Test
     public void setRequired_skills() {
         proj.setJobs(skills);
         assertEquals(skills, proj.getJobs());
     }
 
+
+    /***
+     *
+     */
     @Test
     public void ToString() {
         assertEquals("123 "+proj.date+", title, type: type, skills: java ",proj.toString());
