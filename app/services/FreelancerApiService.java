@@ -6,15 +6,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import models.OwnerResult;
 import models.Project;
 import models.Query;
+import play.libs.concurrent.HttpExecutionContext;
 import play.libs.ws.WSBodyReadables;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
+import play.mvc.Http;
+import play.mvc.Result;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 
+import static play.mvc.Results.redirect;
 
 
 public class FreelancerApiService implements IApiService {
@@ -22,9 +26,11 @@ public class FreelancerApiService implements IApiService {
     private final WSClient ws;
 
     @Inject
-    public FreelancerApiService(WSClient ws) {
+    public FreelancerApiService( WSClient ws) {
         this.ws = ws;
     }
+
+
 
     @Override
     public CompletionStage<List<Project>> getProjects(List<Query> queries, String page) {
@@ -37,21 +43,21 @@ public class FreelancerApiService implements IApiService {
 
         return request.setMethod("GET").stream().thenApply(res -> {
             ArrayList<Project> projects = new ArrayList<>();
-
-            if (res.getStatus() == 200) {
+            if (res.getStatus() == 200 ) {
                 JsonNode jsonProjects = res.getBody(WSBodyReadables.instance.json()).get("result").get("projects");
-                try {
-                    for (var json : jsonProjects) {
-                        projects.add(objectMapper.treeToValue(json, Project.class));
+                for (var json : jsonProjects) {
+                    try {
+                        var project = objectMapper.treeToValue(json, Project.class);
+                        projects.add(project);
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
                     }
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
                 }
             }
-
             return projects;
-        });
+      });
     }
+
 
     @Override
     public CompletionStage<OwnerResult> getOwnerResult(String ownerId) {
@@ -63,9 +69,7 @@ public class FreelancerApiService implements IApiService {
         request.addQueryParameter("owners[]", ownerId);
         request.addQueryParameter("limit", "10");
 
-
         ObjectMapper objectMapper = new ObjectMapper();
-
         return request.setMethod("GET").stream().thenApply(res -> {
             if (res.getStatus() == 200) {
                 JsonNode jsonProjects = res.getBody(WSBodyReadables.instance.json()).get("result");
