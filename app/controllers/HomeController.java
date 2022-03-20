@@ -18,6 +18,8 @@ import play.data.FormFactory;
 import services.IApiService;
 import play.cache.*;
 
+
+
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
@@ -29,13 +31,10 @@ public class HomeController extends Controller {
     private AsyncCacheApi cache;
     public String searchKey = "";
 
-    /**
-     * An action that renders an HTML page with a welcome message.
-     * The configuration in the <code>routes</code> file means that
-     * this method will be called when the application receives a
-     * <code>GET</code> request with a path of <code>/</code>.
-     */
+
     LinkedHashMap<String, List<Project>> search_list = new LinkedHashMap<>();
+
+
     @Inject
     public HomeController(AsyncCacheApi cache,IApiService service) {
         this.service = service;
@@ -61,7 +60,17 @@ public class HomeController extends Controller {
         });
     }
 
+
+
+
     @Inject FormFactory formFactory;
+
+    /**
+     * Capture the Search Keyword from the URL
+     * @param request Http.Request request
+     * @return redirect to the routes.HomeController.index()
+     * @author Seung Hyun Hong, Tamanna Jahin, Nastaran Naseri, Herve Ngomseu Fosting
+     */
     public Result captureSearchKeyword(Http.Request request) {
         DynamicForm dynamicForm = formFactory.form().bindFromRequest(request);
         searchKey = dynamicForm.get("search");
@@ -69,7 +78,14 @@ public class HomeController extends Controller {
     }
 
 
-
+    /**
+     * reverse the Map that contain Search Keyword to Display the new search result above others
+     * @param toReverse LinkedHashMap toReverse
+     * @param <T> generic for the key
+     * @param <Q> generic for the ProjectList
+     * @return
+     * @author Seung Hyun Hong, Tamanna Jahin, Nastaran Naseri, Herve Ngomseu Fosting
+     */
     public static <T,Q> LinkedHashMap<T,Q> reverseMap(LinkedHashMap<T,Q> toReverse){
         LinkedHashMap<T,Q> reverseMap = new LinkedHashMap<>();
         List<T> reverseOrderKeys = new ArrayList<>(toReverse.keySet());
@@ -78,6 +94,13 @@ public class HomeController extends Controller {
         return reverseMap;
     }
 
+    /**
+     * pass the skillId to "https://www.freelancer.com/api/projects/0.1/projects/active?job_details=true&jobs[]=skillId"
+     * display 10 latest projects that contain the skill
+     * @param skillId String skillId
+     * @return completionStage of Results to passing a list of founded projects and skillId to views/skill.scala.html to display
+     * @author Nastaran Naseri
+     */
     public CompletionStage<Result> skills(String skillId) {
         List<Query> queries = new ArrayList<>();
         queries.add(new Query("job_details", "true"));
@@ -88,7 +111,14 @@ public class HomeController extends Controller {
         return service.getProjects(queries, "/active").thenApply(projects -> ok(views.html.skill.render(skillId,projects)));
     }
 
-
+    /**
+     * Receive ownerID and send it to getOwnerResult method in Service.
+     * Recieve Json result and parse it into User object and list of Project
+     * and send projects and user to view
+     * @param ownerId String ownerId
+     * @return CompleionStage<Result>
+     * @author Seung Hyun Hong
+     */
     public CompletionStage<Result> ownerIDSearch(String ownerId) {
         return service.getOwnerResult(ownerId).thenApply(ownerResult -> {
             var user = ownerResult.getUsers().get(ownerId);
@@ -97,6 +127,8 @@ public class HomeController extends Controller {
             return ok(views.html.owner.render(projects, user));
         });
     }
+
+
     public CompletionStage<Result> getGlobalStat() {
 
         List<Query> queries = new ArrayList<>();
@@ -119,6 +151,11 @@ public class HomeController extends Controller {
         });
     }
 
+    /**
+     *
+     * @param projId
+     * @return
+     */
     public CompletionStage<Result> getProjectIDStat(String projId) {
         List<Query> queries = new ArrayList<>();
 

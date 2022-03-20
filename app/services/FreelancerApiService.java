@@ -20,18 +20,30 @@ import java.util.concurrent.CompletionStage;
 
 import static play.mvc.Results.redirect;
 
-
+/**
+ * FreelancerApiService implements IApiService class
+ *
+ */
 public class FreelancerApiService implements IApiService {
     private final String baseURL = "https://www.freelancer.com/api/projects/0.1/projects";
     private final WSClient ws;
 
+    /**
+     * Parametrized Constructor for FreelancerApiService
+     * @param ws WSClient
+     */
     @Inject
     public FreelancerApiService( WSClient ws) {
         this.ws = ws;
     }
 
 
-
+    /**
+     * Parse the Projects
+     * @param queries List of Query
+     * @param page String page
+     * @return CompletionStage of a List of Projects
+     */
     @Override
     public CompletionStage<List<Project>> getProjects(List<Query> queries, String page) {
         WSRequest request = ws.url(baseURL + page);
@@ -58,7 +70,12 @@ public class FreelancerApiService implements IApiService {
       });
     }
 
-
+    /**
+     * Parse the owner and owner's Projects
+     * @param ownerId String ownerId
+     * @return CompletionStage of a List of OwnerResult
+     * @author Seung Hyun Hong
+     */
     @Override
     public CompletionStage<OwnerResult> getOwnerResult(String ownerId) {
         WSRequest request = ws.url(baseURL);
@@ -83,6 +100,13 @@ public class FreelancerApiService implements IApiService {
         });
     }
 
+    /**
+     * Parse the skills and find Projects that contain the skill
+     * @param queries List of Query
+     * @param page String page
+     * @return CompletionStage of a List of Project
+     * @author Nastaran Naseri
+     */
     @Override
     public CompletionStage<Project> getIDProjects(List<Query> queries, String page) {
         WSRequest request = ws.url(baseURL + page);

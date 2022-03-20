@@ -8,6 +8,11 @@ import models.Query;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 
+/**
+ * Interface of API service
+ * @author Seung Hyun Hong, Tamanna Jahin, Nastaran Naseri, Herve Ngomseu Fosting
+ */
+
 @ImplementedBy(FreelancerApiService.class)
 public interface IApiService {
     CompletionStage<List<Project>> getProjects(List<Query> queries, String page);
