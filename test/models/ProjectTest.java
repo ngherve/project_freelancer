@@ -15,8 +15,8 @@ public class ProjectTest {
     private final Project proj = new Project("1", "123", 123456, "title", "type","description", skills);
 
     @Test
-    public void Job(){
-        assertNotNull(new ProjectTest());
+ public void Project(){
+        assertNotNull(new Project());
     }
 
     @Test
