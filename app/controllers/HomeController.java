@@ -82,7 +82,7 @@ public class HomeController extends Controller {
      * @param <T> generic for the key
      * @param <Q> generic for the ProjectList
      * @return
-     * @author Seung Hyun Hong, Tamanna Jahin, Nastaran Naseri, Herve Ngomseu Fosting
+     * @author Seung Hyun Hong, Nastaran Naseri, Herve Ngomseu Fosting, Tamanna Jahin
      */
     public static <T,Q> LinkedHashMap<T,Q> reverseMap(LinkedHashMap<T,Q> toReverse){
         LinkedHashMap<T,Q> reverseMap = new LinkedHashMap<>();
@@ -159,6 +159,7 @@ public class HomeController extends Controller {
      * It then sends the result the the views.projectIDStat.scala.html
      * @param projId String projId
      * @return CompletionStage<Result>
+     * @author Herve Ngomseu Fotsing
      */
     public CompletionStage<Result> getProjectIDStat(String projId) {
         List<Query> queries = new ArrayList<>();

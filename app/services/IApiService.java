@@ -10,7 +10,7 @@ import java.util.concurrent.CompletionStage;
 
 /**
  * Interface of API service
- * @author Seung Hyun Hong, Tamanna Jahin, Nastaran Naseri, Herve Ngomseu Fosting
+ * @author Seung Hyun Hong, Nastaran Naseri, Herve Ngomseu Fosting, Tamanna Jahin
  */
 
 @ImplementedBy(FreelancerApiService.class)
