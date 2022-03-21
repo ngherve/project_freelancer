@@ -35,10 +35,12 @@ public class FreelancerApiService implements IApiService {
 
 
     /**
-     * Parse the Projects
+     * Gets a list of query parameters for a given search and makes an API call to freelancer.com
+     * Returning the specified number of active projects
      * @param queries List of Query
      * @param page String page
      * @return CompletionStage of a List of Projects
+     * @author Herve Ngomseu Fotsing, Seung Hyun Hong
      */
     @Override
     public CompletionStage<List<Project>> getProjects(List<Query> queries, String page) {
@@ -98,11 +100,12 @@ public class FreelancerApiService implements IApiService {
     }
 
     /**
-     * Parse the skills and find Projects that contain the skill
+     * Makes an API call for a specified project projId and parses the result
+     * from the json object to project CompletionStage<Project></Project>
      * @param queries List of Query
      * @param page String page
      * @return CompletionStage of a List of Project
-     * @author Nastaran Naseri
+     * @author Herve Ngomseu Fotsing
      */
     @Override
     public CompletionStage<Project> getIDProjects(List<Query> queries, String page) {

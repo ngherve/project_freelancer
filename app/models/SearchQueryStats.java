@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- *  Class for .................................
+ * Class for mapping search keywords to statistics about the unique keywords in the project descriptions
  * @author  Herve Ngomseu Fotsing
  */
 public class SearchQueryStats {
@@ -16,6 +16,7 @@ public class SearchQueryStats {
 
     /**
      * Parameterized constructor
+     * Initialising the specified keuword and its corresponding lists of projects for conducting Stat
      * @param searchWord in String
      * @param projects in LinkedHashMap<String,List<Project>>
      */
@@ -25,7 +26,7 @@ public class SearchQueryStats {
     }
 
     /**
-     *
+     * Combines all project descriptions in a given search to provide global stats
      * @return result in String
      */
     public String combineStrings(){
@@ -39,7 +40,7 @@ public class SearchQueryStats {
     }
 
     /**
-     *
+     * Computes word level stat in a given search of the 250 latest projects
      * @return getStringlongMap(words)
      */
     public Map<String, Long> computeWordLevelStat(){
@@ -48,16 +49,17 @@ public class SearchQueryStats {
     }
 
     /**
-     *
+     * Given a string, it generates the frequency of each unique keywords
      * @param words in String
-     * @return getStringLongMap(words)
+     * @return Map<String, Long> getStringLongMap(words)
      */
     public static Map<String, Long> computeWordLevelStatByProject(String words){
         return getStringLongMap(words);
     }
 
     /**
-     *
+     * Helper method
+     * Given a string, it generates the frequency of each unique keywords
      * @param words in String
      * @return wordFreq
      */
@@ -71,7 +73,7 @@ public class SearchQueryStats {
     }
 
     /**
-     *
+     * Given a word-frequency map, it returns a formated output of each field
      * @param wordFreq
      * @return result.toString()
      */

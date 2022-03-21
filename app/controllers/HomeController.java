@@ -45,8 +45,6 @@ public class HomeController extends Controller {
     }
     String x = Integer.toString(((int)(Math.random() * 100000)) % 1000);
 
-
-
     public CompletionStage<Result> index() {
 
         List<Query> queries = new ArrayList<>();
@@ -64,11 +62,7 @@ public class HomeController extends Controller {
 
     }
 
-
-
-
     @Inject FormFactory formFactory;
-
     /**
      * Capture the Search Keyword from the URL
      * @param request Http.Request request
@@ -131,7 +125,14 @@ public class HomeController extends Controller {
         });
     }
 
-
+    /**
+     * Performs search of the 250 latest projects based on the specified keyword
+     * Provides global statistics about the frequency of all unique keywords from
+     * the projects' descriptions in descending order of frequency.
+     * It then sends the result the the views.globalstats.scala.html
+     * @return CompleionStage<Result>
+     * @author Herve Ngomseu Fotsing
+     */
     public CompletionStage<Result> getGlobalStat() {
         List<Query> queries = new ArrayList<>();
         queries.add(new Query("query", searchKey));
@@ -143,7 +144,6 @@ public class HomeController extends Controller {
         return service.getProjects(queries, "/active").thenApply(projects -> {
             String stats = "";
 
-            System.out.println("here");
             projList.put(searchKey, projects);
             SearchQueryStats queryStat = new SearchQueryStats(searchKey, projList);
 
@@ -154,9 +154,11 @@ public class HomeController extends Controller {
     }
 
     /**
-     *
-     * @param projId
-     * @return
+     * Provides individual statistics about the frequency of all unique keywords from
+     * the specified project's projId and description in descending order of frequency.
+     * It then sends the result the the views.projectIDStat.scala.html
+     * @param projId String projId
+     * @return CompletionStage<Result>
      */
     public CompletionStage<Result> getProjectIDStat(String projId) {
         List<Query> queries = new ArrayList<>();
