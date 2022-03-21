@@ -15,10 +15,9 @@ public class ProjectTest {
     private final Project proj = new Project("1", "123", 123456, "title", "type","description", skills);
 
     @Test
- public void Project(){
+    public void Project() {
         assertNotNull(new Project());
     }
-
     @Test
     public void testGetProjId() {
         assertEquals("1", proj.getProjId());
@@ -61,12 +60,6 @@ public class ProjectTest {
         proj.setTitle("title");
         assertEquals("title", proj.getTitle());
     }
-
-    @Test
-    public void getJobs() {
-        assertEquals(skills, proj.getJobs());
-    }
-
     @Test
     public void getDescription() {
         assertEquals("description", proj.getDescription());
@@ -79,15 +72,17 @@ public class ProjectTest {
     }
 
     @Test
+    public void getJobs() {
+        assertEquals(skills, proj.getJobs());
+    }
+
+    @Test
     public void setRequired_skills() {
         proj.setJobs(skills);
         assertEquals(skills, proj.getJobs());
     }
 
 
-    /***
-     *
-     */
     @Test
     public void ToString() {
         assertEquals("123 "+proj.date+", title, type: type, skills: java ",proj.toString());

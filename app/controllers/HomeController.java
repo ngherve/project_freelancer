@@ -5,13 +5,14 @@ import models.Project;
 
 import models.Query;
 import models.SearchQueryStats;
-import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 
 import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import play.data.DynamicForm;
 import play.data.FormFactory;
@@ -26,19 +27,21 @@ import play.cache.*;
  */
 public class HomeController extends Controller {
 
-    private final IApiService service;
+    public static IApiService service;
 
-    private AsyncCacheApi cache;
+    //private AsyncCacheApi cache;
     public String searchKey = "";
 
+    public static void setService(IApiService service) {
+        HomeController.service = service;
+    }
 
     LinkedHashMap<String, List<Project>> search_list = new LinkedHashMap<>();
 
 
     @Inject
-    public HomeController(AsyncCacheApi cache,IApiService service) {
+    public HomeController( IApiService service) {
         this.service = service;
-        this.cache =cache;
     }
     String x = Integer.toString(((int)(Math.random() * 100000)) % 1000);
 
@@ -58,6 +61,7 @@ public class HomeController extends Controller {
             }
             return ok(views.html.freelancelot.render(reverseMap(search_list)));
         });
+
     }
 
 
@@ -123,14 +127,12 @@ public class HomeController extends Controller {
         return service.getOwnerResult(ownerId).thenApply(ownerResult -> {
             var user = ownerResult.getUsers().get(ownerId);
             var projects = ownerResult.getProjects();
-
             return ok(views.html.owner.render(projects, user));
         });
     }
 
 
     public CompletionStage<Result> getGlobalStat() {
-
         List<Query> queries = new ArrayList<>();
         queries.add(new Query("query", searchKey));
         queries.add(new Query("limit", "250"));

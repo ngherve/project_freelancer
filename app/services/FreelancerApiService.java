@@ -6,26 +6,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import models.OwnerResult;
 import models.Project;
 import models.Query;
-import play.libs.concurrent.HttpExecutionContext;
 import play.libs.ws.WSBodyReadables;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
-import play.mvc.Http;
-import play.mvc.Result;
 
 import javax.inject.Inject;
+import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
-
-import static play.mvc.Results.redirect;
 
 /**
  * FreelancerApiService implements IApiService class
  *
  */
 public class FreelancerApiService implements IApiService {
-    private final String baseURL = "https://www.freelancer.com/api/projects/0.1/projects";
+    String baseURL = "https://www.freelancer.com/api/projects/0.1/projects";
     private final WSClient ws;
 
     /**
@@ -96,7 +92,8 @@ public class FreelancerApiService implements IApiService {
                     e.printStackTrace();
                 }
             }
-            return null;
+            OwnerResult os = new OwnerResult();
+            return os ;
         });
     }
 
@@ -126,5 +123,12 @@ public class FreelancerApiService implements IApiService {
             }
             return null;
         });
+    }
+
+    public void setBaseUrl(String s) {
+        baseURL = s;
+    }
+    public String getBaseUrl() {
+        return baseURL;
     }
 }
