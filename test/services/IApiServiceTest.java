@@ -8,6 +8,10 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * test class for IApiServiceTest
+ * @author Seung Hyun Hong, Tamanna Jahin, Nastaran Naseri, Herve Ngomseu Fosting
+ */
 public class IApiServiceTest {
     public IApiService apiInterface;
     List<Query> queryList = new ArrayList<>();
