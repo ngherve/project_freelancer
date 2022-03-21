@@ -60,12 +60,7 @@ public class FreeImplimentation implements IApiService {
         return null;
     }
 
-    /**
-     * Setter for the baseUrl
-     * This is useful for tests, and used in the mock implementation which, ironically,
-     * uses part of the live implementation without ever querying Twitter
-     * @param baseUrl baseUrl. Default is Twitter live URL as defined above.
-     */
+
     public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
     }
