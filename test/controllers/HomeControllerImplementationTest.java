@@ -22,10 +22,10 @@ import java.util.concurrent.ExecutionException;
 
 import static play.inject.Bindings.bind;
 
+
 /**
- * Twitter api test by bind TwitterApi to TwitterImplementation, and get the instance of TwitterApi
- * We use an instance of TwitterTestImplementation provided by Guice
- * @author Adrien Poupa
+ * Implementation to test home controller
+ * @author Seung Hyun Hong, Tamanna Jahin, Nastaran Naseri, Herve Ngomseu Fosting
  */
 
 public class HomeControllerImplementationTest {
@@ -83,7 +83,12 @@ public class HomeControllerImplementationTest {
         Assert.assertEquals(profileJsonFile, body);
     }
 */
-
+    /**
+     * Method to convert the json response file from json to string
+     * @param request Http.Request request
+     * @return jsonstring String
+     * @author Seung Hyun Hong, Tamanna Jahin, Nastaran Naseri, Herve Ngomseu Fosting
+     */
     private String getJsonFileAsString(String path) throws IOException {
         String filePath = new File("").getAbsolutePath();
         byte[] encoded = Files.readAllBytes(Paths.get(filePath.concat(path)));

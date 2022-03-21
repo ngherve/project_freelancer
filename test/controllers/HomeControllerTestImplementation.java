@@ -16,6 +16,10 @@ import java.util.concurrent.CompletionStage;
 
 import play.server.Server;
 
+/**
+ * Implementation to test home controller
+ * @author Seung Hyun Hong, Tamanna Jahin, Nastaran Naseri, Herve Ngomseu Fosting
+ */
 public class HomeControllerTestImplementation implements IApiService {
 
     private WSClient ws;
@@ -47,6 +51,7 @@ public class HomeControllerTestImplementation implements IApiService {
 
 
     /**
+     * Cleaning the ws client
      * Close the WSClient, stop the server
      * @throws IOException exception
      */

@@ -41,6 +41,10 @@ import static play.mvc.Http.Status.OK;
 import static org.mockito.Mockito.when;
 import static play.mvc.Results.ok;
 
+/**
+ * Implementation to test home controller
+ * @author Seung Hyun Hong, Tamanna Jahin, Nastaran Naseri, Herve Ngomseu Fosting
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class HomeControllerTest {
     public static final RuntimeException TEST_EXCEPTION = new RuntimeException("Test exception");
@@ -75,7 +79,11 @@ public class HomeControllerTest {
 
     final Result  projects = null;
 
-
+    /**
+     * Setting up controller before testing using mockito
+     * Implementation to test home controller
+     * @author Seung Hyun Hong, Tamanna Jahin, Nastaran Naseri, Herve Ngomseu Fosting
+     */
     @Before
     public void setup(){
          homeController= Mockito.mock(HomeController.class);
@@ -169,6 +177,11 @@ public class HomeControllerTest {
 
     }
 
+    /**
+     * testing the reverse map request
+     * Implementation to test home controller
+     * @author Seung Hyun Hong, Tamanna Jahin, Nastaran Naseri, Herve Ngomseu Fosting
+     */
     @Test
     public void reverseMap( ) {
         LinkedHashMap<String,List<Project>> toReverse = new LinkedHashMap<>();
@@ -185,7 +198,11 @@ public class HomeControllerTest {
     @Test
     public void skills() {
     }
-
+    /**
+     * Implementation to test home controller
+     * testing the aAPI request for getting ID
+     * @author Seung Hyun Hong, Tamanna Jahin, Nastaran Naseri, Herve Ngomseu Fosting
+     */
     @Test
     public void ownerIDSearch() throws IOException, ExecutionException, InterruptedException {
 //        CompletionStage<OwnerResult> stage2 = freeService.getOwnerResult("");
@@ -201,7 +218,11 @@ public class HomeControllerTest {
 
     }
 
-
+    /**
+     * Implementation to test home controller
+     * tetsing global stat
+     * @author Seung Hyun Hong, Tamanna Jahin, Nastaran Naseri, Herve Ngomseu Fosting
+     */
     @Test
     public void getGlobalStat() {
 //        CompletionStage<Result> stage = CompletableFuture.completedFuture(ok());
