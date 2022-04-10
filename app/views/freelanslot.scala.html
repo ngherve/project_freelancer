@@ -1,0 +1,96 @@
+@(request: play.mvc.Http.Request)
+<!DOCTYPE html>
+
+<html>
+
+    <style>
+            table, th, td {
+                border:1px solid black;
+            }
+            body{
+                padding: 5%;
+                padding-top: 20px;
+                font-size: 20px;
+            }
+            h1 {text-align: center;}
+            form {text-align: center;
+                margin-left: 5px;
+
+            }
+            button {
+                margin-left: 15px;
+                padding: 6px 30px;
+                border-radius: 12px;
+                font-size:12pt;
+                background-color: #008cff;
+                padding-left: 50px;
+                padding-right: 50px;
+                color: white;
+            }
+            div i{
+                display: inline-block;
+                padding: 5px;
+                color: #008cff;
+            }
+
+
+            .proTitle span{
+                display: inline;
+            }
+            .proTitle p{
+                display: inline;
+
+            }
+            .proList li{
+                padding-bottom: 5px;
+            }
+            .center{
+                padding-left: 500px;
+            }
+            .proList li p{
+                display: inline;
+            }
+
+            .containTag{
+                padding: 0;
+                display: inline;
+            }
+            .con2Tag{
+                padding: 0;
+                display: inline-block;
+                border: 1px solid dimgrey;
+                z-index: 5;
+            }
+            .con2Tag input{
+                border: none;
+            }
+    </style>
+
+
+    <head>
+        <title>FreelanceLot</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script type='text/javascript' src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+        <script type='text/javascript' src='@routes.Assets.at("javascripts/freelanslot.js")'></script>
+
+    </head>
+    <body data-ws-url="@routes.HomeController.ws2.webSocketURL(request)">
+        <center><h1 style="margin-bottom: 10px;">Welcome to FreeLancelot</h1></center>
+        <center>
+            <div style="margin:auto;">
+            <form id="addsymbolform">
+                <div class="containTag">
+                    <div class="con2Tag">
+                        <input id="addsymboltext" type="text" name="query" style="height:25px; font-size:14pt;" placeholder="Enter search terms" required>
+
+                         </div>
+                    <button type="submit"  >GO!</button>
+                </div>
+            </form>
+            </div>
+        </center>
+
+            <div id="divtest"></div>
+
+    </body>
+</html>

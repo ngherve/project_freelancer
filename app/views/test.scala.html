@@ -1,0 +1,27 @@
+@(request: play.mvc.Http.Request)
+<!DOCTYPE html>
+
+<html>
+    <style>
+            table, th, td {
+                border:1px solid black;
+            }
+    </style>
+    <head>
+        <title>FreelanceLot</title>
+        <script type='text/javascript' src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+        <script type='text/javascript' src='@routes.Assets.at("javascripts/Test.js")'></script>
+    </head>
+    <body data-ws-url="@routes.HomeController.ws1.webSocketURL(request)">
+        <center><h2>Gitterific</h2></center>
+        <center>
+            <form id="addsymbolform">
+                Search : <input id="addsymboltext" type="text" name="query" required></input>
+                <input type="submit" value="Go"></input>
+            </form>
+        </center>
+        <center>
+           <div id="divtest"></div>
+        </center>
+    </body>
+</html>

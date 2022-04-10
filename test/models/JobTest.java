@@ -1,5 +1,4 @@
-package models;
-
+import models.Job;
 import org.junit.Before;
 import org.junit.Test;
 

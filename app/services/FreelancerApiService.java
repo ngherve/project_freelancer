@@ -3,17 +3,17 @@ package services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import models.OwnerResult;
-import models.Project;
-import models.Query;
+import models.*;
 import play.libs.ws.WSBodyReadables;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
 
 import javax.inject.Inject;
-//import java.security.acl.Owner;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletionStage;
 
 /**
@@ -35,12 +35,10 @@ public class FreelancerApiService implements IApiService {
 
 
     /**
-     * Gets a list of query parameters for a given search and makes an API call to freelancer.com
-     * Returning the specified number of active projects
+     * Parse the Projects
      * @param queries List of Query
      * @param page String page
      * @return CompletionStage of a List of Projects
-     * @author Herve Ngomseu Fotsing, Seung Hyun Hong
      */
     @Override
     public CompletionStage<List<Project>> getProjects(List<Query> queries, String page) {
@@ -55,7 +53,7 @@ public class FreelancerApiService implements IApiService {
             ArrayList<Project> projects = new ArrayList<>();
             if (res.getStatus() == 200 ) {
                 JsonNode jsonProjects = res.getBody(WSBodyReadables.instance.json()).get("result").get("projects");
-                for (var json : jsonProjects) {
+                     for (var json : jsonProjects) {
                     try {
                         var project = objectMapper.treeToValue(json, Project.class);
                         projects.add(project);
@@ -68,6 +66,33 @@ public class FreelancerApiService implements IApiService {
       });
     }
 
+    @Override
+    public CompletionStage<List<Project>> getProjects2(List<Query> queries, String page) {
+        WSRequest request = ws.url(baseURL);
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        for (var query: queries) {
+            request.addQueryParameter(query.key, query.value);
+        }
+
+        return request.setMethod("GET").stream().thenApply(res -> {
+            ArrayList<Project> projects = new ArrayList<>();
+            if (res.getStatus() == 200 ) {
+                JsonNode jsonProjects = res.getBody(WSBodyReadables.instance.json()).get("result").get("projects");
+                JsonNode jsonOwner = res.getBody(WSBodyReadables.instance.json()).get("result").get("users");
+                for (var json : jsonProjects) {
+                    try {
+                        var project = objectMapper.treeToValue(json, Project.class);
+                        projects.add(project);
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return projects;
+        });
+    }
+
     /**
      * Parse the owner and owner's Projects
      * @param ownerId String ownerId
@@ -75,7 +100,7 @@ public class FreelancerApiService implements IApiService {
      * @author Seung Hyun Hong
      */
     @Override
-    public CompletionStage<OwnerResult> getOwnerResult(String ownerId) {
+    public CompletionStage<OwnerResult> getOwnerResult( String ownerId) {
         WSRequest request = ws.url(baseURL);
 
         request.addQueryParameter("job_details", "true");
@@ -85,27 +110,47 @@ public class FreelancerApiService implements IApiService {
         request.addQueryParameter("limit", "10");
 
         ObjectMapper objectMapper = new ObjectMapper();
+
+        OwnerResult os = new OwnerResult();
         return request.setMethod("GET").stream().thenApply(res -> {
+            ArrayList<Project> projects = new ArrayList<>();
             if (res.getStatus() == 200) {
-                JsonNode jsonProjects = res.getBody(WSBodyReadables.instance.json()).get("result");
+                JsonNode jsonResult = res.getBody(WSBodyReadables.instance.json()).get("result");
+                JsonNode jsonProjects = jsonResult.get("projects");
+                JsonNode jsonUser = jsonResult.get("users").get(ownerId);
+                for (var json : jsonProjects) {
+                    try {
+                        var project = objectMapper.treeToValue(json, Project.class);
+                        projects.add(project);
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                    }
+                }
+
                 try {
-                    return objectMapper.treeToValue(jsonProjects, OwnerResult.class);
-                } catch (JsonProcessingException e) {
+                    User users = objectMapper.readValue(jsonUser.toString(), User.class);
+                    Map<String, User> owner = new HashMap<>();
+                    owner.put(ownerId, users);
+                    os.setUsers(owner);
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
+                os.setProjects(projects);
+
             }
-            OwnerResult os = new OwnerResult();
+
             return os ;
         });
+
     }
 
+
     /**
-     * Makes an API call for a specified project projId and parses the result
-     * from the json object to project CompletionStage<Project></Project>
+     * Parse the skills and find Projects that contain the skill
      * @param queries List of Query
      * @param page String page
      * @return CompletionStage of a List of Project
-     * @author Herve Ngomseu Fotsing
+     * @author Nastaran Naseri
      */
     @Override
     public CompletionStage<Project> getIDProjects(List<Query> queries, String page) {

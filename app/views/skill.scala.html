@@ -1,87 +1,26 @@
-@(skillId: String,search_list : java.util.List[Project])
+@(request: play.mvc.Http.Request)
+<!DOCTYPE html>
 
-
-@main("FreeLancelot") {
-
+<html>
     <style>
-            body {
+            table, th, td {
+                border:1px solid black;
+            }
+            body{
                 padding: 5%;
                 padding-top: 20px;
-            }
-
-            h1 {
-                text-align: center;
-            }
-
-            h1 p {
-                display: inline-block;
-            }
-
-
-            .displayBox {
-
-                margin-top: 30px;
-
-            }
-
-            .boldFont1 {
-                font-size: 25px;
-                font-weight: 500;
-            }
-
-            .boldFont2 {
                 font-size: 20px;
             }
-
-            .boldFont3 {
-                font-size: 20px;
-                font-weight: 300;
-            }
-
-            .proTitle span {
-                display: inline;
-            }
-
-            .proTitle p {
-                display: inline;
-
-            }
-
-            .proList {
-                padding-left: 20px;
-
-
-            }
-
-            .proList li {
-                padding-bottom: 5px;
-            }
-
-            .proList li p {
-                display: inline;
-            }
-
-            .space {
-                padding-right: 15px;
-            }
-
     </style>
+    <head>
+        <title>FreelanceLot</title>
+        <script type='text/javascript' src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+        <script type='text/javascript' src='@routes.Assets.at("javascripts/skill.js")'></script>
+    </head>
+    <body data-ws-url="@routes.HomeController.ws4.webSocketURL(request)">
+        <center><h2>Skills</h2></center>
+       <!-- <div id="user"></div>-->
+        <div id="divtest"></div>
 
-    @if(search_list.size() != 0) {
-        <ol class="proList boldFont3">
-        @for(temp <- search_list) {
-            <li class="pros">
-                <a href="@routes.HomeController.ownerIDSearch(temp.ownerId)" target="_blank">@temp.ownerId</a>
-                <p>@temp.date</p>, <a href="" target="_blank"><p>@temp.title</p></a>
-                , type: <p>@temp.projectType</p>, skills:
-                @for(skill <- temp.jobs) {
-                    <a href="@routes.HomeController.skills(skill.id)" target="_blank" class="space"><p>@skill.name</p></a>
-                }
-                <a href="@routes.HomeController.getProjectIDStat(temp.projId)" target="_blank" class="space"><p>Stats</p></a>
-                <a href="" target="_blank" class="space"><p>Readability</p></a>
-            </li>
-        }
-        </ol>
-    }
-
-}
+    </body>
+</html>

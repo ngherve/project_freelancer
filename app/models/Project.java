@@ -76,6 +76,12 @@ public class Project {
         return this.projId;
     }
 
+    public String getDate() {
+        return this.date;
+    }
+
+    public String getProjectType(){ return this.projectType;}
+
     /**
      * Setter for Project id
      * @param projId id of the Project

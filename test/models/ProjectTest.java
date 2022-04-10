@@ -1,6 +1,6 @@
-package models;
 
-
+import models.Job;
+import models.Project;
 import org.junit.Test;
 
 import java.util.ArrayList;

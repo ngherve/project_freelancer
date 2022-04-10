@@ -216,16 +216,16 @@ public class User {
      */
     @Override
     public String toString() {
-        return  "ID =" + id + "<br />"+
-                "User Name =" + username + "<br />"+
-                "Registration_Date =" + date +"<br />"+
-                "Limited_Account =" + limitedAccount +"<br />"+
-                "Display_Name = " + displayName +"<br />"+
-                "Location = " + city  +"<br />"+
-                "Role =" + role +"<br />"+
-                "Chosen_Role =" + chosenRole +"<br />"+
-                "Status =" + st +"<br />"+
-                "Primary_Currency=" + pCurr + "<br />";
+        return  "ID =  " + id + "<br />"+
+                "User Name =  " + username + "<br />"+
+                "Registration_Date =  " + date +"<br />"+
+                "Limited_Account =  " + limitedAccount +"<br />"+
+                "Display_Name =  " + displayName +"<br />"+
+                "Location =  " + city  +"<br />"+
+                "Role =  " + role +"<br />"+
+                "Chosen_Role =  " + chosenRole +"<br />"+
+                "Status =  " + st +"<br />"+
+                "Primary_Currency =  " + pCurr + "<br />";
 
     }
 }

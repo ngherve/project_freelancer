@@ -10,12 +10,13 @@ import java.util.concurrent.CompletionStage;
 
 /**
  * Interface of API service
- * @author Seung Hyun Hong, Nastaran Naseri, Herve Ngomseu Fosting, Tamanna Jahin
+ * @author Seung Hyun Hong, Tamanna Jahin, Nastaran Naseri, Herve Ngomseu Fosting
  */
 
 @ImplementedBy(FreelancerApiService.class)
 public interface IApiService {
     CompletionStage<List<Project>> getProjects(List<Query> queries, String page);
+    CompletionStage<List<Project>> getProjects2(List<Query> queries, String page);
     CompletionStage<Project> getIDProjects(List<Query> queries, String page);
-    CompletionStage<OwnerResult> getOwnerResult(String ownerId);
+    CompletionStage<OwnerResult> getOwnerResult( String ownerId);
 }

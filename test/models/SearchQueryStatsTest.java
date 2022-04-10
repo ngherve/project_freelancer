@@ -1,5 +1,5 @@
-package models;
-
+import models.Job;
+import models.SearchQueryStats;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.Test;
 

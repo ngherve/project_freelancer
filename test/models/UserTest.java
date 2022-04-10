@@ -1,7 +1,6 @@
-package models;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import models.User;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -225,16 +224,16 @@ public class UserTest {
                 ex.printStackTrace();
             }
         System.out.println(user.getPrimaryCurrency());
-        String test = "ID =" + user.id + "<br />"+
-                "User Name =" + user.username + "<br />"+
-                "Registration_Date =" + user.date +"<br />"+
-                "Limited_Account =" + user.limitedAccount +"<br />"+
-                "Display_Name = " + user.displayName +"<br />"+
-                "Location = " + user.city +"<br />"+
-                "Role =" + user.role +"<br />"+
-                "Chosen_Role =" + user.chosenRole +"<br />"+
-                "Status =" + user.st +"<br />"+
-                "Primary_Currency=" + user.pCurr+ "<br />";
+        String test = "ID =  " + user.id + "<br />"+
+                "User Name =  " + user.username + "<br />"+
+                "Registration_Date =  " + user.date +"<br />"+
+                "Limited_Account =  " + user.limitedAccount +"<br />"+
+                "Display_Name =  " + user.displayName +"<br />"+
+                "Location =  " + user.city +"<br />"+
+                "Role =  " + user.role +"<br />"+
+                "Chosen_Role =  " + user.chosenRole +"<br />"+
+                "Status =  " + user.st +"<br />"+
+                "Primary_Currency =  " + user.pCurr+ "<br />";
 
         assertEquals(test, user.toString());
 

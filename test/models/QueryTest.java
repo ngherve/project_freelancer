@@ -1,5 +1,4 @@
-package models;
-
+import models.Query;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

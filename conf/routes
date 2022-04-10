@@ -1,18 +1,21 @@
 # Routes
-# This file defines all application routes (Higher priority routes first)
-# ~~~~+ nocsrf
+# ~~~~
 
-# An example controller showing a sample home page
-GET    /                           controllers.HomeController.index()
-GET    /freelancelot               controllers.HomeController.index()
-+ nocsrf
-POST   /freelancelot               controllers.HomeController.captureSearchKeyword(request : Request)
-POST   /                           controllers.HomeController.captureSearchKeyword(request : Request)
-GET     /skills/:skillId           controllers.HomeController.skills(skillId: String)
-GET     /ownerIDSearch/:ownerId             controllers.HomeController.ownerIDSearch(ownerId: String)
-GET     /GlobalStats               controllers.HomeController.getGlobalStat()
-GET     /projectIDStats/:projId            controllers.HomeController.getProjectIDStat(projId: String)
+GET     /                   controllers.HomeController.index
+GET     /ws                 controllers.HomeController.ws
+GET /test                   controllers.HomeController.test
+GET /ws1                    controllers.HomeController.ws1
+GET /free                   controllers.HomeController.free
+GET /ws2                    controllers.HomeController.ws2
+GET /ws3                    controllers.HomeController.ws3
+GET /ws4                    controllers.HomeController.ws4
+GET /owner/:id                    controllers.HomeController.owner(id:String)
+GET /skills/:skillId           controllers.HomeController.skills(skillId: String)
+GET /globalStats            controllers.HomeController.globalStat
+GET /globalStatActorWS      controllers.HomeController.globalStatActorWS
+GET /getProjectIDStat/:projId       controllers.HomeController.getProjectIDStat(projId: String)
+GET /getProjectIDStatWS             controllers.HomeController.getProjectIDStatWS
 
+GET     /assets/*file        controllers.Assets.at(path="/public", file)
 
-# Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
