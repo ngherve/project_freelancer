@@ -66,32 +66,6 @@ public class FreelancerApiService implements IApiService {
       });
     }
 
-    @Override
-    public CompletionStage<List<Project>> getProjects2(List<Query> queries, String page) {
-        WSRequest request = ws.url(baseURL);
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        for (var query: queries) {
-            request.addQueryParameter(query.key, query.value);
-        }
-
-        return request.setMethod("GET").stream().thenApply(res -> {
-            ArrayList<Project> projects = new ArrayList<>();
-            if (res.getStatus() == 200 ) {
-                JsonNode jsonProjects = res.getBody(WSBodyReadables.instance.json()).get("result").get("projects");
-                JsonNode jsonOwner = res.getBody(WSBodyReadables.instance.json()).get("result").get("users");
-                for (var json : jsonProjects) {
-                    try {
-                        var project = objectMapper.treeToValue(json, Project.class);
-                        projects.add(project);
-                    } catch (JsonProcessingException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            return projects;
-        });
-    }
 
     /**
      * Parse the owner and owner's Projects

@@ -1,3 +1,4 @@
+package models;
 
 import models.Job;
 import models.Project;
@@ -135,5 +136,23 @@ public class ProjectTest {
     @Test
     public void ToString() {
         assertEquals("123 "+proj.date+", title, type: type, skills: java ",proj.toString());
+    }
+
+    /**
+     * Test to getProjId
+     */
+    @Test
+    public void getProjId() {
+        assertEquals("1", proj.getProjId());
+    }
+
+    @Test
+    public void getDate() {
+        assertEquals("Jan. 02 1970", proj.getDate());
+    }
+
+    @Test
+    public void getProjectType() {
+        assertEquals("type", proj.getProjectType());
     }
 }
