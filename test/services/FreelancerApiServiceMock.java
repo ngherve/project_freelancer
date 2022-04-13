@@ -20,16 +20,26 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 /**
- *  Mock class for test
+ *  Mock class for test FreelancerApiService class in order to avoid real api call
  *  @author Seung Hyun Hong, Nastaran Naseri, Herve Ngomseu Fosting
  */
 
 public class FreelancerApiServiceMock implements IApiService {
-    String baseURL ="a";
+    String baseURL ="url";
 
+    /**
+     * default constructor
+     */
     public FreelancerApiServiceMock(){
-
     }
+
+    /**
+     * This method will return list of Project from json file in resources folder
+     * instead of calling real api.
+     * @param queries
+     * @param page
+     * @return ompletionStage<List<Project>>
+     */
     @Override
     public CompletionStage<List<Project>> getProjects(List<Query> queries, String page) {
         String testResources = System.getProperty("user.dir") + "/test/resources/Project.json";
@@ -59,7 +69,13 @@ public class FreelancerApiServiceMock implements IApiService {
         });
         return completProject;
     }
-
+    /**
+     * This method will return list of Project from json file in resources folder
+     * instead of calling real api.
+     * @param queries
+     * @param page
+     * @return ompletionStage<List<Project>>
+     */
     @Override
     public CompletionStage<Project> getIDProjects(List<Query> queries, String page) {
         String testResources = System.getProperty("user.dir") + "/test/resources/Project.json";
@@ -81,7 +97,13 @@ public class FreelancerApiServiceMock implements IApiService {
         });
         return completProject;
     }
-
+    /**
+     * This method will return OwnerResult from json file in resources folder
+     * instead of calling real api.
+     * @param queries
+     * @param page
+     * @return OwnerResult
+     */
     @Override
     public CompletionStage<OwnerResult> getOwnerResult(String ownerId) {
         String testResources = System.getProperty("user.dir") + "/test/resources/User.json";
@@ -116,11 +138,19 @@ public class FreelancerApiServiceMock implements IApiService {
         return completOwnerResult;
     }
 
+    /**
+     * Test for setBaseUrl method
+     * @param s
+     */
     @Override
     public void setBaseUrl(String s) {
         this.baseURL = s;
     }
 
+    /**
+     * Test for getBaseUrl method
+     * @return Stromg baseURL
+     */
     @Override
     public String getBaseUrl() {
         return baseURL;
