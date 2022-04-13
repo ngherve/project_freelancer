@@ -23,7 +23,7 @@ import javax.inject.Inject;
 import java.util.*;
 
 /**
- * The Repo Search Actor class is used to display
+ * The  GlobalStats Actor  class is used to display
  * 10 results for prvided query by making an API call every 10 seconds.
  * This actor subscribes to Supervisor Actor.
  *
