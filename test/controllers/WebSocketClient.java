@@ -16,6 +16,8 @@ import java.util.function.Consumer;
 /**
  * A quick wrapper around AHC WebSocket
  *
+ * This Class is from PlayFrameWork play-java-websocket example.
+ * We included this file inorder use it to test our WebSocket
  * Credits: https://github.com/playframework/play-java-websocket-example/blob/2.6.x/test/controllers/WebSocketClient.java
  * https://github.com/AsyncHttpClient/async-http-client/blob/2.0/client/src/main/java/org/asynchttpclient/ws/WebSocket.java
  */

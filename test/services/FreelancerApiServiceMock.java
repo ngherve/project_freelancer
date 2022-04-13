@@ -19,6 +19,10 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
+/**
+ *  Mock class for test
+ *  @author Seung Hyun Hong, Nastaran Naseri, Herve Ngomseu Fosting
+ */
 
 public class FreelancerApiServiceMock implements IApiService {
     String baseURL ="a";

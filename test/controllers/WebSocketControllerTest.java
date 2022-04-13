@@ -22,6 +22,8 @@ import static play.test.Helpers.testServer;
 import static org.awaitility.Awaitility.*;
 
 /**
+ * This Class is from PlayFrameWork play-java-websocket example.
+ * We included this file inorder use it to test our WebSocket
  * Credits: https://github.com/playframework/play-java-websocket-example/blob/2.6.x/test/controllers/FunctionalTest.java
  */
 public class WebSocketControllerTest {

@@ -28,7 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
-
+/**
+ * Test Class for HomeCOntrollerTest
+ * @author Seung Hyun Hong, Nastaran Naseri, Herve Ngomseu Fosting
+ */
 public class HomeControllerTest extends WithApplication{
     @Override
     protected Application provideApplication() {
@@ -47,6 +50,9 @@ public class HomeControllerTest extends WithApplication{
         system = null;
     }
 
+    /**
+     * Validate test for index()
+     */
     @Test
     public void index() {
         Http.RequestBuilder request = new Http.RequestBuilder()
@@ -55,7 +61,9 @@ public class HomeControllerTest extends WithApplication{
         Result result = route(app, request);
         assertNotNull(result.status());
     }
-
+    /**
+     * Validate test for free()
+     */
     @Test
     public void free() {
         Http.RequestBuilder request = new Http.RequestBuilder()
@@ -64,7 +72,9 @@ public class HomeControllerTest extends WithApplication{
         Result result = route(app, request);
         assertNotNull(result.status());
     }
-
+    /**
+     * Validate test for owner()
+     */
     @Test
     public void owner() {
         Http.RequestBuilder request = new Http.RequestBuilder()
@@ -73,7 +83,9 @@ public class HomeControllerTest extends WithApplication{
         Result result = route(app, request);
         assertNotNull(result.status());
     }
-
+    /**
+     * Validate test for skills()
+     */
     @Test
     public void skills() {
         Http.RequestBuilder request = new Http.RequestBuilder()
@@ -82,7 +94,9 @@ public class HomeControllerTest extends WithApplication{
         Result result = route(app, request);
         assertNotNull(result.status());
     }
-
+    /**
+     * Validate test for globalStat()
+     */
     @Test
     public void globalStat() {
         Http.RequestBuilder request = new Http.RequestBuilder()
@@ -91,7 +105,9 @@ public class HomeControllerTest extends WithApplication{
         Result result = route(app, request);
         assertNotNull(result.status());
     }
-
+    /**
+     * Validate test for getProjectIDStat()
+     */
     @Test
     public void getProjectIDStat() {
         Http.RequestBuilder request = new Http.RequestBuilder()
@@ -101,9 +117,9 @@ public class HomeControllerTest extends WithApplication{
         assertNotNull(result.status());
     }
 
+
     @Test
     public void freeWS() throws ExecutionException, InterruptedException {
-
     }
 
     @Test

@@ -145,12 +145,16 @@ public class ProjectTest {
     public void getProjId() {
         assertEquals("1", proj.getProjId());
     }
-
+    /**
+     * Test to getDate
+     */
     @Test
     public void getDate() {
         assertEquals("Jan. 02 1970", proj.getDate());
     }
-
+    /**
+     * Test to getProjectType
+     */
     @Test
     public void getProjectType() {
         assertEquals("type", proj.getProjectType());
