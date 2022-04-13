@@ -13,7 +13,9 @@ import java.util.concurrent.TimeUnit;
  *The Supervisor Actor class is a timer which ticks every 10 seconds
  *and notifies all its clients
  *
- *
+ * @author  Seunghyun Hong, Nastaran Naseri, Herve Ngomseu Fotsing
+ * @version 1.0
+ * @since   2022-04-13
  */
 public class SupervisorActor extends AbstractActorWithTimers {
 
