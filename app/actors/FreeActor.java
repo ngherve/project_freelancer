@@ -23,7 +23,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-
+/**
+ * The Repo Search Actor class is used to display
+ * 10 results for prvided query by making an API call every 10 seconds.
+ * This actor subscribes to Supervisor Actor.
+ *
+ * @author  Seunghyun Hong, Nastaran Naseri, Herve Ngomseu Fotsing
+ * @version 1.0
+ * @since   2022-04-13
+ *
+ */
 public class FreeActor extends AbstractActor {
 
     private ActorRef ws;

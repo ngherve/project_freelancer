@@ -29,7 +29,7 @@ import java.util.*;
  *
  * @author  Herve Ngomseu Fotsing
  * @version 1.0
- * @since   2021-12-07
+ * @since   2022-04-13
  *
  */
 
@@ -40,13 +40,23 @@ public class GlobalStatsActor extends AbstractActor {
     String query;
     Set<String> setWpordFreq = new HashSet<>();
 
+    /**
+     * COnstructor for creating new GlbalStat Object
+     * @param wsOut A reference to the ActorRef object
+     * @param wsClient the client websocket to pass queries
+     */
     public GlobalStatsActor(final ActorRef wsOut,WSClient wsClient) {
         ws =  wsOut;
         this.wsClient = wsClient;
         Logger.debug("New Global Stats Actor{} for WebSocket {}", self(), wsOut);
     }
 
-
+    /**
+     *
+     * @param wsOut A reference to the ActorRef object
+     * @param wsClient the client websocket to pass queries
+     * @return a props object representing the configuration for creating new actor
+     */
     public static Props props(final ActorRef wsout,WSClient wsClient) {
         return Props.create(GlobalStatsActor.class, wsout,wsClient);
     }
@@ -70,7 +80,7 @@ public class GlobalStatsActor extends AbstractActor {
 
     /**
      * Method called when Actor receives message
-     * @return Receive
+     * @return Receive recieves to data from supervisor
      */
     @Override
     public Receive createReceive() {
@@ -83,7 +93,7 @@ public class GlobalStatsActor extends AbstractActor {
 
     /**
      * Method to display 10 results for provided query and send it to UI via JsonObject
-     * @param d Data
+     * @param d Data The data to be sent to the supervisor
      * @throws Exception
      */
     private void send(Data d) throws Exception {
