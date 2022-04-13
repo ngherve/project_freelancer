@@ -38,7 +38,7 @@ public class FreelancerApiServiceMockTest {
     @BeforeClass
     public static void initTestApp() {
         testApp = new GuiceInjectorBuilder()
-                .overrides(bind(IApiService.class).to(FreelancerApiServiceMock.class))
+                .overrides(bind(IApiService.class).to(FreelancerApiService.class))
                 .build();
         freeService = testApp.instanceOf(IApiService.class);
     }
