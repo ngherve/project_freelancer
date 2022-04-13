@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 
 /**
- * The Repo Search Actor class is used to display
+ * The Free Actor class is used to display
  * 10 results for prvided query by making an API call every 10 seconds.
  * This actor subscribes to Supervisor Actor.
  *
@@ -40,11 +40,20 @@ public class FreeActor extends AbstractActor {
     String query;
     public static LinkedHashMap<String, List<Project>> search_list = new LinkedHashMap<>();
 
+    /**
+    * Default Constructor for FreeActor
+    */
     public FreeActor(){
 
 
     }
 
+    /**
+    * Parametrized Constructor for FreeActor
+    *
+    * @param wsOut final ActorRef wsOut
+    * @param wsClient WSClient wsClient
+    */
     public FreeActor(final ActorRef wsOut,WSClient wsClient) {
         ws =  wsOut;
         this.wsClient = wsClient;
@@ -52,13 +61,18 @@ public class FreeActor extends AbstractActor {
     }
 
 
-
+    /**
+     * The method is called to create Free Actor
+     * @return Props
+     */
     public static Props props(final ActorRef wsout,WSClient wsClient) {
         return Props.create(FreeActor.class, wsout,wsClient);
     }
 
 
-
+    /**
+     * Method Call before Actor is created
+     */
     @Override
     public void preStart() {
         context().actorSelection("/user/supervisorActor/")
