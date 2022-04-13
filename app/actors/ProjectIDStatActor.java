@@ -26,7 +26,7 @@ import java.util.Set;
  *
  * @author  Herve Ngomseu Fotsing
  * @version 1.0
- * @since   2021-12-07
+ * @since   2022-04-13
  *
  */
 
@@ -37,14 +37,23 @@ public class ProjectIDStatActor extends AbstractActor {
     String query;
     Set<String> setWpordFreq1 = new HashSet<>();
 
-
+    /**
+     * COnstructor for creating new GlbalStat Object
+     * @param wsOut A reference to the ActorRef object
+     * @param wsClient the client websocket to pass queries
+     */
     public ProjectIDStatActor(final ActorRef wsOut, WSClient wsClient) {
         ws =  wsOut;
         this.wsClient = wsClient;
         Logger.debug("New Project ID Stats Actor{} for WebSocket {}", self(), wsOut);
     }
 
-
+    /**
+     *
+     * @param wsOut A reference to the ActorRef object
+     * @param wsClient the client websocket to pass queries
+     * @return a props object representing the configuration for creating new actor
+     */
     public static Props props(final ActorRef wsout,WSClient wsClient) {
         return Props.create(ProjectIDStatActor.class, wsout,wsClient);
     }
