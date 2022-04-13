@@ -1,0 +1,16 @@
+# Routes
+# ~~~~
+
+GET /                           controllers.HomeController.index
+GET /free                       controllers.HomeController.free
+GET /freeWS                     controllers.HomeController.freeWS
+GET /ownerWS                    controllers.HomeController.ownerWS
+GET /skillsWS                   controllers.HomeController.skillsWS
+GET /owner/:id                  controllers.HomeController.owner(id:String)
+GET /skills/:skillId            controllers.HomeController.skills(skillId: String)
+GET /globalStats                controllers.HomeController.globalStat
+GET /globalStatActorWS          controllers.HomeController.globalStatActorWS
+GET /getProjectIDStat/:projId   controllers.HomeController.getProjectIDStat(projId: String)
+GET /getProjectIDStatWS         controllers.HomeController.getProjectIDStatWS
+
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
