@@ -27,11 +27,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * The project Search Actor class is used to display
+ * The Skills Actor class is used to display
  * 10 results for prvided query by making an API call every 10 seconds.
  * This actor subscribes to Supervisor Actor.
  *
- *
+ * @author Nastaran Naseri
+ * @version 1.0
+ * @since   2022-04-13
  */
 
 public class SkillActor extends AbstractActor {
@@ -42,14 +44,24 @@ public class SkillActor extends AbstractActor {
     public static LinkedHashMap<String, List<Project>> search_list = new LinkedHashMap<>();
 
 
-
+    /**
+     * Parametrized Constructor for Skill Actor
+     *
+     * @param wsOut final ActorRef wsOut
+     * @param wsClient WSClient wsClient
+     */
     public SkillActor(final ActorRef wsOut,WSClient wsClient) {
         ws =  wsOut;
         this.wsClient = wsClient;
         Logger.debug("New Skill Search Actor{} for WebSocket {}", self(), wsOut);
     }
 
-
+    /**
+     * The method is called to create Skill Actor
+     * @param wsout
+     * @param wsClient
+     * @return
+     */
     public static Props props(final ActorRef wsout,WSClient wsClient) {
         return Props.create(SkillActor.class, wsout,wsClient);
     }
