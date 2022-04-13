@@ -112,7 +112,7 @@ public class SkillActor extends AbstractActor {
     private void send(Data d) throws Exception {
 
         if (this.query != null && this.query !="") {
-            Logger.debug("New Skill Search Actor Query {}", this.query);
+            Logger.debug("New Free Search Actor Query {}", this.query);
             List<Query> queries = new ArrayList<>();
            // queries.add(new Query("query", "\"" + this.query + "\""));
             queries.add(new Query("jobs[]", this.query));

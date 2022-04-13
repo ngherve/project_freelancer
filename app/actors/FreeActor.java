@@ -15,10 +15,8 @@ import models.Query;
 import play.Logger;
 import play.libs.Json;
 import play.libs.ws.WSClient;
-import scala.util.parsing.json.JSONObject;
 import services.FreelancerApiService;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -28,21 +26,26 @@ import java.util.stream.Collectors;
 
 public class FreeActor extends AbstractActor {
 
-    private final ActorRef ws;
+    private ActorRef ws;
     WSClient wsClient;
     String query;
     public static LinkedHashMap<String, List<Project>> search_list = new LinkedHashMap<>();
 
+    public FreeActor(){
 
-    public FreeActor(final ActorRef wsOut ) {
+
+    }
+
+    public FreeActor(final ActorRef wsOut,WSClient wsClient) {
         ws =  wsOut;
-   //     this.wsClient = wsClient;
+        this.wsClient = wsClient;
         Logger.debug("New FreeActor Search Actor{} for WebSocket {}", self(), wsOut);
     }
 
 
-    public static Props props(final ActorRef wsout ) {
-        return Props.create(FreeActor.class, wsout );
+
+    public static Props props(final ActorRef wsout,WSClient wsClient) {
+        return Props.create(FreeActor.class, wsout,wsClient);
     }
 
 
@@ -101,7 +104,6 @@ public class FreeActor extends AbstractActor {
      * @throws Exception
      */
     private void send(Data d) throws Exception {
-
         if (this.query != null && this.query !="") {
             Logger.debug("New Free Search Actor Query {}", this.query);
             List<Query> queries = new ArrayList<>();

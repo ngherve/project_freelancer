@@ -56,10 +56,10 @@ public class HomeController extends Controller {
 
 
     public WebSocket freeWS(){
-        return WebSocket.Json.accept(request ->ActorFlow.actorRef(ws-> FreeActor.props(ws),actorSystem,materializer));
+        return WebSocket.Json.accept(request ->ActorFlow.actorRef(ws-> FreeActor.props(ws,wsClient),actorSystem,materializer));
     }
     public WebSocket ownerWS(){
-        return WebSocket.Json.accept(request ->ActorFlow.actorRef(ws-> OwnerActor.props(ws),actorSystem,materializer));
+        return WebSocket.Json.accept(request ->ActorFlow.actorRef(ws-> OwnerActor.props(ws,wsClient),actorSystem,materializer));
     }
     public WebSocket skillsWS(){
         return WebSocket.Json.accept(request ->ActorFlow.actorRef(ws-> SkillActor.props(ws,wsClient),actorSystem,materializer));

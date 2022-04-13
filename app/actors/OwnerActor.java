@@ -43,15 +43,15 @@ public class OwnerActor extends AbstractActor {
     public static LinkedHashMap<String, List<Project>> search_list = new LinkedHashMap<>();
 
 
-    public OwnerActor(final ActorRef wsOut ) {
+    public OwnerActor(final ActorRef wsOut,WSClient wsClient) {
         ws =  wsOut;
-
+        this.wsClient = wsClient;
         Logger.debug("New Owner Search Actor{} for WebSocket {}", self(), wsOut);
     }
 
 
-    public static Props props(final ActorRef wsout ) {
-        return Props.create(OwnerActor.class, wsout );
+    public static Props props(final ActorRef wsout,WSClient wsClient) {
+        return Props.create(OwnerActor.class, wsout,wsClient);
     }
 
 
@@ -79,7 +79,7 @@ public class OwnerActor extends AbstractActor {
     public Receive createReceive() {
         return receiveBuilder()
                 .match(Data.class, this::send)
-                .match(ObjectNode.class, o -> this.query = String.valueOf(o.get("keyword")))
+                .match(ObjectNode.class, o -> this.query = String.valueOf(o.get("keyword").asText()))
                 .build();
     }
     /**
