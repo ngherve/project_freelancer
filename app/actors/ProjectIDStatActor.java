@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * The Repo Search Actor class is used to display
+ * The ProjectIDStat Actor class is used to display
  * 10 results for prvided query by making an API call every 10 seconds.
  * This actor subscribes to Supervisor Actor.
  *

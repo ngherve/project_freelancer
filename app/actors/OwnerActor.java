@@ -27,12 +27,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * The Project Search Actor class is used to display
+ * The Owner Actor class is used to display
  * 10 results for query by making an API call every 10 seconds.
  * This actor subscribes to Supervisor Actor.
  *
  * @author  Seunghyun Hong
- *
+ * @version 1.0
+ * @since   2022-04-13
  */
 
 public class OwnerActor extends AbstractActor {
@@ -42,14 +43,24 @@ public class OwnerActor extends AbstractActor {
     String query;
     public static LinkedHashMap<String, List<Project>> search_list = new LinkedHashMap<>();
 
-
+    /**
+     * Parametrized Constructor for Owner Actor
+     *
+     * @param wsOut final ActorRef wsOut
+     * @param wsClient WSClient wsClient
+     */
     public OwnerActor(final ActorRef wsOut,WSClient wsClient) {
         ws =  wsOut;
         this.wsClient = wsClient;
         Logger.debug("New Owner Search Actor{} for WebSocket {}", self(), wsOut);
     }
 
-
+    /**
+     * The method is called to create Owner Actor
+     * @param wsout
+     * @param wsClient
+     * @return
+     */
     public static Props props(final ActorRef wsout,WSClient wsClient) {
         return Props.create(OwnerActor.class, wsout,wsClient);
     }
