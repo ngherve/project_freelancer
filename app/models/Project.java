@@ -76,10 +76,18 @@ public class Project {
         return this.projId;
     }
 
+    /**
+     * Getter for Date_with formmated date
+     * @return date of the Project
+     */
     public String getDate() {
         return this.date;
     }
 
+    /**
+     * Getter for ProjectType
+     * @return projectType of the Project
+     */
     public String getProjectType(){ return this.projectType;}
 
     /**

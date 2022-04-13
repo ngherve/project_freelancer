@@ -15,7 +15,10 @@ import play.libs.ws.WSRequest;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
-
+/**
+ * Test Class for SkillActorTest
+ * @author Seung Hyun Hong, Nastaran Naseri, Herve Ngomseu Fosting
+ */
 public class SkillActorTest {
     static ActorSystem system;
 
@@ -32,7 +35,9 @@ public class SkillActorTest {
         TestKit.shutdownActorSystem(system);
         system = null;
     }
-
+    /**
+     * Test method to test performig of SkillActor
+     */
     @Test
     public void SkillActorTest() {
         WSClient ws = new WSClient() {

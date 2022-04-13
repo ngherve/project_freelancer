@@ -41,13 +41,19 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Test Class for FreeActorTest
+ * @author Seung Hyun Hong, Nastaran Naseri, Herve Ngomseu Fosting
+ */
 public class FreeActorTest {
+
     static ActorSystem system;
     private static FreeActor freeActor;
     private static FreelancerApiService freeService;
-
     private static Injector testApp;
     ActorRef ref;
+
+
     @Before
     public void setup() {
         system = ActorSystem.create();
@@ -59,6 +65,9 @@ public class FreeActorTest {
         system = null;
     }
 
+    /**
+     * Test method to test performig of FreeActor
+     */
     @Test
     public void FreeActorTest() {
         WSClient ws = new WSClient() {
@@ -87,7 +96,6 @@ public class FreeActorTest {
         ObjectNode root = factory.objectNode();
         root.put("keyword", "java");
         freeActor.tell(root, ActorRef.noSender());
-
         assertEquals("\"java\"", root.get("keyword").toString());
     }
 }

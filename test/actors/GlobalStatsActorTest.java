@@ -15,7 +15,10 @@ import play.libs.ws.WSRequest;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
-
+/**
+ * Test Class for GlobalStatsActorTest
+ * @author Seung Hyun Hong, Nastaran Naseri, Herve Ngomseu Fosting
+ */
 public class GlobalStatsActorTest {
     static ActorSystem system;
 
@@ -32,6 +35,9 @@ public class GlobalStatsActorTest {
         system = null;
     }
 
+    /**
+     * Test method to test performig of GlobalStatsActor
+     */
     @Test
     public void GlobalStatsActorTest() {
         WSClient ws = new WSClient() {
@@ -55,11 +61,11 @@ public class GlobalStatsActorTest {
 
             }
         };
-        ActorRef freeActor = system.actorOf(GlobalStatsActor.props(ref, ws), "GlobalStatsActor");
+        ActorRef globalStatsActor = system.actorOf(GlobalStatsActor.props(ref, ws), "GlobalStatsActor");
         JsonNodeFactory factory = JsonNodeFactory.instance;
         ObjectNode root = factory.objectNode();
         root.put("keyword", "java");
-        freeActor.tell(root, ActorRef.noSender());
+        globalStatsActor.tell(root, ActorRef.noSender());
 
         assertEquals("\"java\"", root.get("keyword").toString());
     }

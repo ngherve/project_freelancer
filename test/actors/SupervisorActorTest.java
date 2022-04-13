@@ -11,7 +11,10 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.testkit.javadsl.TestKit;
-
+/**
+ * Test Class for SupervisorActorTest
+ * @author Seung Hyun Hong, Nastaran Naseri, Herve Ngomseu Fosting
+ */
 public class SupervisorActorTest {
     public static ActorSystem system;
 
@@ -20,7 +23,9 @@ public class SupervisorActorTest {
         system = ActorSystem.create();
     }
 
-
+    /**
+     * Test method to test performig of SupervisorActor
+     */
     @Test
     public void SupervisorActorTest() {
 

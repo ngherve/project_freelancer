@@ -15,7 +15,10 @@ import play.libs.ws.WSRequest;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
-
+/**
+ * Test Class for OwnerActorTest
+ * @author Seung Hyun Hong, Nastaran Naseri, Herve Ngomseu Fosting
+ */
 public class OwnerActorTest {
 
     static ActorSystem system;
@@ -33,7 +36,9 @@ public class OwnerActorTest {
         TestKit.shutdownActorSystem(system);
         system = null;
     }
-
+    /**
+     * Test method to test performig of OwnerActor
+     */
     @Test
     public void OwnerActorTest() {
         WSClient ws = new WSClient() {
