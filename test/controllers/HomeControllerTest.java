@@ -102,16 +102,16 @@ public class HomeControllerTest extends WithApplication{
     }
 
     @Test
-    public void ws2() throws ExecutionException, InterruptedException {
+    public void freeWS() throws ExecutionException, InterruptedException {
 
     }
 
     @Test
-    public void ws3() {
+    public void ownerWS() {
     }
 
     @Test
-    public void ws4() {
+    public void skillWS() {
     }
 
     @Test

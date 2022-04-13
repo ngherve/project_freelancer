@@ -35,34 +35,13 @@ public class OwnerActorTest {
     }
 
     @Test
-    public void SkillActorTest() {
-        WSClient ws = new WSClient() {
-            @Override
-            public Object getUnderlying() {
-                return null;
-            }
-
-            @Override
-            public play.api.libs.ws.WSClient asScala() {
-                return null;
-            }
-
-            @Override
-            public WSRequest url(String url) {
-                return null;
-            }
-
-            @Override
-            public void close() throws IOException {
-
-            }
-        };
-        ActorRef ownerActor = system.actorOf(OwnerActor.props(ref), "Ownerctor");
+    public void OwnerActorTest() {
+        ActorRef ownerActor = system.actorOf(OwnerActor.props(ref), "OwnerActor");
         JsonNodeFactory factory = JsonNodeFactory.instance;
         ObjectNode root = factory.objectNode();
         root.put("keyword", "java");
         ownerActor.tell(root, ActorRef.noSender());
-
         assertEquals("\"java\"", root.get("keyword").toString());
+
     }
 }

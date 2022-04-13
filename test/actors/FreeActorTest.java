@@ -43,6 +43,8 @@ import java.util.concurrent.ExecutionException;
 
 public class FreeActorTest {
     static ActorSystem system;
+    private static FreeActor freeActor;
+    private static FreelancerApiService freeService;
 
     private static Injector testApp;
     ActorRef ref;
@@ -59,28 +61,8 @@ public class FreeActorTest {
 
     @Test
     public void FreeActorTest() {
-        WSClient ws = new WSClient() {
-            @Override
-            public Object getUnderlying() {
-                return null;
-            }
 
-            @Override
-            public play.api.libs.ws.WSClient asScala() {
-                return null;
-            }
-
-            @Override
-            public WSRequest url(String url) {
-                return null;
-            }
-
-            @Override
-            public void close() throws IOException {
-
-            }
-        };
-        ActorRef freeActor = system.actorOf(FreeActor.props(ref, ws), "FreeActor");
+        ActorRef freeActor = system.actorOf(FreeActor.props(ref), "FreeActor");
         JsonNodeFactory factory = JsonNodeFactory.instance;
         ObjectNode root = factory.objectNode();
         root.put("keyword", "java");

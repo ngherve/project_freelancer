@@ -34,15 +34,15 @@ public class FreeActor extends AbstractActor {
     public static LinkedHashMap<String, List<Project>> search_list = new LinkedHashMap<>();
 
 
-    public FreeActor(final ActorRef wsOut,WSClient wsClient) {
+    public FreeActor(final ActorRef wsOut ) {
         ws =  wsOut;
-        this.wsClient = wsClient;
+   //     this.wsClient = wsClient;
         Logger.debug("New FreeActor Search Actor{} for WebSocket {}", self(), wsOut);
     }
 
 
-    public static Props props(final ActorRef wsout,WSClient wsClient) {
-        return Props.create(FreeActor.class, wsout,wsClient);
+    public static Props props(final ActorRef wsout ) {
+        return Props.create(FreeActor.class, wsout );
     }
 
 
@@ -101,6 +101,7 @@ public class FreeActor extends AbstractActor {
      * @throws Exception
      */
     private void send(Data d) throws Exception {
+
         if (this.query != null && this.query !="") {
             Logger.debug("New Free Search Actor Query {}", this.query);
             List<Query> queries = new ArrayList<>();

@@ -28,7 +28,7 @@ public class FreelancerApiServiceTest {
     @BeforeClass
     public static void initTestApp() {
         testApp = new GuiceApplicationBuilder()
-                .overrides(bind(IApiService.class).to(FreelancerApiService.class)).build();
+                .overrides(bind(IApiService.class).to(FreelancerApiServiceMock.class)).build();
     }
 
     @Test
