@@ -36,7 +36,28 @@ public class OwnerActorTest {
 
     @Test
     public void OwnerActorTest() {
-        ActorRef ownerActor = system.actorOf(OwnerActor.props(ref), "OwnerActor");
+        WSClient ws = new WSClient() {
+            @Override
+            public Object getUnderlying() {
+                return null;
+            }
+
+            @Override
+            public play.api.libs.ws.WSClient asScala() {
+                return null;
+            }
+
+            @Override
+            public WSRequest url(String url) {
+                return null;
+            }
+
+            @Override
+            public void close() throws IOException {
+
+            }
+        };
+        ActorRef ownerActor = system.actorOf(OwnerActor.props(ref,ws), "OwnerActor");
         JsonNodeFactory factory = JsonNodeFactory.instance;
         ObjectNode root = factory.objectNode();
         root.put("keyword", "java");
